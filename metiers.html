@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<meta charset="utf-8">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>OrbitAI Pages métier</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout : une page d'atterrissage par métier, sans menu. La pièce centrale est l'application
+   elle-même, jouable : on clique sur un agent, il travaille sous nos yeux. Puis preuve,
+   confidentialité, calcul du gain, prix. Indigo = OrbitAI, ambre = votre gain. */
+:root{
+  color-scheme:dark;
+  --void:#06060f; --deep:#0b0b1e; --panel:#11112b; --panel-2:#181840;
+  --line:rgba(140,146,255,.16); --line-strong:rgba(140,146,255,.34);
+  --ink:#eef0ff; --muted:#a2a7cc; --dim:#7176a0;
+  --indigo:#7477ff; --indigo-soft:rgba(116,119,255,.14);
+  --solar:#ffb547; --solar-soft:rgba(255,181,71,.13); --solar-ink:#1d1203;
+  --risk:#ff7566; --ok:#62d6a6;
+  --display:"Space Grotesk","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --body:"DM Sans","Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:"DM Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--void);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--void)}
+h1,h2,h3,h4,h5,p{margin:0}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;letter-spacing:-.02em}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--solar);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1180px;margin-inline:auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.eyebrow{font:500 .72rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.6rem}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c,var(--indigo));box-shadow:0 0 0 4px color-mix(in srgb,var(--c,var(--indigo)) 22%,transparent)}
+.note{font-size:.82rem;color:var(--dim)}
+.band{padding-block:clamp(56px,8vw,104px);border-top:1px solid var(--line)}
+.band.alt{background:var(--deep)}
+.band h2{font-size:clamp(1.8rem,3.8vw,2.8rem);line-height:1.08;font-weight:600;margin-top:1rem}
+.band .lede{color:var(--muted);font-size:1.06rem;max-width:60ch;margin-top:1rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;padding:.85rem 1.3rem;border-radius:11px;border:1px solid transparent;font-weight:600;font-size:.97rem;text-decoration:none;cursor:pointer;transition:transform .18s,background .18s,border-color .18s;text-align:center}
+.btn:hover{transform:translateY(-2px)}
+.btn-solar{background:var(--solar);color:var(--solar-ink);box-shadow:0 10px 30px -12px rgba(255,181,71,.7)}
+.btn-indigo{background:var(--indigo);color:#05051a;box-shadow:0 10px 30px -12px rgba(116,119,255,.8)}
+.btn-ghost{border-color:var(--line-strong);background:transparent;color:var(--ink)}
+.btn-ghost:hover{border-color:var(--indigo);background:var(--indigo-soft)}
+.btn-sm{padding:.6rem 1rem;font-size:.9rem;white-space:nowrap}
+.cta-row{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.6rem}
+
+/* en-tête : pas de menu, seulement le sélecteur de maquette et le rendez-vous */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:rgba(6,6,15,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:.8rem 1.2rem;padding-block:.7rem;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:.65rem;font:600 1.08rem var(--display);text-decoration:none}
+.brand .mark{width:30px;height:30px;border-radius:9px;background:var(--indigo);display:grid;place-items:center}
+.brand .mark::after{content:"";width:13px;height:13px;border-radius:4px;background:var(--void)}
+.switch{display:flex;gap:4px;padding:4px;border:1px dashed rgba(255,181,71,.45);border-radius:12px;margin-left:auto;min-width:0;max-width:100%;overflow-x:auto;scrollbar-width:none}
+.switch::-webkit-scrollbar{display:none}
+.switch a{padding:.35rem .7rem;border-radius:8px;font-size:.84rem;color:var(--muted);text-decoration:none;white-space:nowrap}
+.switch a[aria-current="page"]{background:var(--solar-soft);color:var(--ink)}
+@media (max-width:700px){.switch{order:3;width:100%;margin-left:0;justify-content:space-between}.top .btn{margin-left:auto}}
+
+/* accroche */
+.hero{position:relative;overflow:hidden;padding-block:clamp(32px,5vw,64px) clamp(40px,6vw,80px)}
+.hero::before{content:"";position:absolute;left:50%;top:-40%;width:90%;aspect-ratio:1.6;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(116,119,255,.2),transparent 62%);pointer-events:none}
+.hero .wrap{position:relative}
+.h-top{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:clamp(20px,4vw,56px);align-items:end}
+@media (max-width:900px){.h-top{grid-template-columns:minmax(0,1fr)}}
+.hero h1{font-size:clamp(2rem,4vw,3.1rem);line-height:1.06;font-weight:700;margin-top:1.1rem}
+.hero h1 em{font-style:normal;color:var(--solar)}
+.hero .lede{color:var(--muted);font-size:1.06rem;max-width:46ch}
+.h-top .cta-row{margin-top:1.2rem}
+
+/* l'application, jouable */
+.app{margin-top:clamp(28px,4vw,44px);border:1px solid var(--line-strong);border-radius:22px;background:var(--panel);overflow:hidden;box-shadow:0 70px 130px -70px rgba(116,119,255,.95)}
+.app-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .8rem;padding:.7rem 1rem;border-bottom:1px solid var(--line);font:500 .76rem var(--mono);color:var(--dim)}
+.app-bar .dots{display:flex;gap:6px}
+.app-bar .dots i{width:10px;height:10px;border-radius:50%;background:var(--panel-2);border:1px solid var(--line-strong)}
+.app-bar .fr{margin-left:auto;color:var(--ok);display:flex;align-items:center;gap:.4rem}
+.app-bar .fr::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok)}
+.app-body{display:grid;grid-template-columns:minmax(0,290px) minmax(0,1fr)}
+.side{padding:1rem;border-right:1px solid var(--line);display:grid;gap:.35rem;align-content:start;min-width:0}
+.side h4{font:500 .7rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin:.2rem 0 .35rem}
+.agb{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.7rem;align-items:center;padding:.6rem .65rem;border-radius:11px;border:1px solid transparent;background:transparent;text-align:left;cursor:pointer;font-size:.9rem;color:var(--muted);transition:background .15s,border-color .15s,color .15s}
+.agb:hover{color:var(--ink);border-color:var(--line)}
+.agb[aria-pressed="true"]{background:var(--indigo-soft);border-color:var(--line-strong);color:var(--ink)}
+.agb .at{font:500 .72rem var(--mono);color:var(--indigo);background:var(--indigo-soft);border-radius:7px;padding:.25rem .4rem}
+.agb small{display:block;color:var(--dim);font-size:.78rem}
+.conn{display:flex;flex-wrap:wrap;gap:.35rem}
+.conn span{font:500 .72rem var(--mono);color:var(--muted);border:1px solid var(--line);border-radius:7px;padding:.25rem .5rem}
+.main{display:grid;grid-template-rows:1fr auto;min-width:0}
+.conv{padding:1.2rem;display:grid;gap:.9rem;align-content:start;min-height:540px}
+.me{justify-self:end;max-width:46ch;padding:.8rem 1rem;border-radius:14px;background:var(--panel-2);border:1px solid var(--line-strong);font-size:.93rem;min-height:4.6em}
+.me b{display:block;color:var(--indigo);font:500 .84rem var(--mono)}
+.caret::after{content:"";display:inline-block;width:2px;height:1em;background:var(--indigo);vertical-align:-.15em;margin-left:2px;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:.4rem}
+.step{display:flex;gap:.65rem;align-items:center;font:500 .82rem var(--mono);color:var(--dim);transition:color .2s}
+.step i{flex:none;width:14px;height:14px;border-radius:50%;border:2px solid var(--line-strong)}
+.step.run{color:var(--ink)}
+.step.run i{border-color:var(--indigo);border-top-color:transparent;animation:spin .7s linear infinite}
+.step.ok{color:var(--muted)}
+.step.ok i{border-color:var(--ok);background:var(--ok)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.doc{border:1px solid var(--line-strong);border-radius:14px;background:var(--void);padding:1.1rem;display:grid;gap:1rem;max-width:62ch}
+.doc-h{display:flex;justify-content:space-between;gap:.5rem 1rem;align-items:baseline;flex-wrap:wrap}
+.doc-h b{font:600 1.08rem var(--display)}
+.doc-h span{font:500 .66rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--solar);border:1px solid rgba(255,181,71,.4);border-radius:999px;padding:.2rem .55rem}
+.sec h5{font:600 .9rem var(--body);color:var(--ink)}
+.sec i{display:block;height:7px;border-radius:4px;background:var(--panel-2);margin-top:.4rem}
+.file{display:flex;align-items:center;gap:.7rem;padding:.6rem .7rem;border:1px solid var(--line-strong);border-radius:10px;font:500 .82rem var(--mono);min-width:0}
+.file i{flex:none;width:26px;height:32px;border-radius:5px;background:var(--indigo-soft);border:1px solid var(--indigo)}
+.file span{overflow-wrap:anywhere}
+.reveal{opacity:0;transform:translateY(6px);transition:opacity .35s,transform .35s}
+.reveal.in{opacity:1;transform:none}
+.after-run{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem 1rem;font-size:.92rem;color:var(--muted)}
+.composer{display:flex;flex-wrap:wrap;gap:.7rem;align-items:center;padding:.8rem 1rem;border-top:1px solid var(--line);background:var(--deep)}
+.composer p{flex:1 1 220px;min-width:0;font-size:.88rem;color:var(--dim)}
+@media (max-width:820px){
+  .app-body{grid-template-columns:minmax(0,1fr)}
+  .side{border-right:0;border-bottom:1px solid var(--line);display:flex;gap:.5rem;overflow-x:auto;scrollbar-width:none;padding:.8rem}
+  .side::-webkit-scrollbar{display:none}
+  .side h4,.side .conn{display:none}
+  .agb{flex:none;border-color:var(--line)}
+  .agb small{display:none}
+  .conv{min-height:0}
+}
+
+/* preuves */
+.cases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:2.2rem;border-top:1px solid var(--line)}
+.case{padding:1.5rem 1.5rem 1.5rem 0;border-bottom:1px solid var(--line)}
+.case+.case{padding-left:1.5rem;border-left:1px solid var(--line)}
+@media (max-width:820px){.cases{grid-template-columns:minmax(0,1fr)}.case+.case{padding-left:0;border-left:0}}
+.case .who{font:500 .76rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.shift{display:flex;flex-wrap:wrap;align-items:baseline;gap:.2rem .7rem;margin-top:.9rem;font-family:var(--display);font-weight:600;letter-spacing:-.02em}
+.shift s{font-size:1.25rem;color:var(--dim);text-decoration-thickness:1.5px}
+.shift b{font-size:clamp(2rem,3.4vw,2.6rem);line-height:1;color:var(--solar);font-weight:700}
+.shift svg{align-self:center;color:var(--dim)}
+.case p.txt{color:var(--muted);font-size:.95rem;margin-top:.6rem}
+
+/* confidentialité */
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.2rem;margin-top:2.2rem}
+@media (max-width:820px){.two{grid-template-columns:minmax(0,1fr)}}
+.col{border:1px solid var(--line);border-radius:20px;padding:1.5rem;display:grid;gap:1.1rem;align-content:start}
+.col.good{border-color:rgba(98,214,166,.35);background:rgba(98,214,166,.05)}
+.col h3{font-size:1.2rem;font-weight:600}
+.col dl{margin:0;display:grid;gap:1rem}
+.col dt{font:500 .72rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--risk)}
+.col.good dt{color:var(--ok)}
+.col dd{margin:.3rem 0 0;color:var(--muted);font-size:.95rem}
+
+/* calcul du gain */
+.sim{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(24px,4vw,64px);margin-top:2.2rem;align-items:start}
+@media (max-width:900px){.sim{grid-template-columns:minmax(0,1fr)}}
+.field{margin-top:1.4rem}
+.field>label,.field>.lab{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;font-size:.9rem;color:var(--muted);margin-bottom:.55rem}
+.field output,.field .val{font:600 1.05rem var(--display);color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem .85rem;border-radius:999px;border:1px solid var(--line-strong);background:rgba(17,17,43,.7);font-size:.9rem;color:var(--muted);cursor:pointer;transition:border-color .15s,background .15s,color .15s}
+.chip::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--dim)}
+.chip:hover{border-color:var(--indigo);color:var(--ink)}
+.chip[aria-pressed="true"]{border-color:rgba(255,181,71,.6);background:var(--solar-soft);color:var(--ink)}
+.chip[aria-pressed="true"]::before{background:var(--solar);box-shadow:0 0 10px var(--solar)}
+.sliders{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 1.6rem}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:28px;margin:0;background:transparent;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:4px;background:linear-gradient(to right,var(--solar) var(--fill,50%),var(--line-strong) var(--fill,50%))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--ink);border:5px solid var(--solar);margin-top:-8px}
+input[type=range]::-moz-range-track{height:4px;border-radius:4px;background:var(--line-strong)}
+input[type=range]::-moz-range-progress{height:4px;border-radius:4px;background:var(--solar)}
+input[type=range]::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--ink);border:5px solid var(--solar)}
+.result{border:1px solid rgba(255,181,71,.4);border-radius:20px;padding:1.6rem;background:radial-gradient(circle at 100% 0,rgba(255,181,71,.15),transparent 55%),var(--panel);min-width:0}
+.result .k{font:500 .7rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.result .eur{font:700 clamp(2.5rem,5.6vw,3.8rem)/1 var(--display);color:var(--solar);letter-spacing:-.03em;font-variant-numeric:tabular-nums;margin-top:.6rem}
+.result .eur span{white-space:nowrap}
+.result .eur small{font:500 1rem var(--body);color:var(--ink);letter-spacing:0;margin-left:.5rem}
+.result .hrs{margin-top:.5rem}
+.tbars{display:grid;gap:.7rem;margin-top:1.3rem;padding-top:1.2rem;border-top:1px solid var(--line)}
+.tbar .hd{display:flex;justify-content:space-between;gap:1rem;font-size:.88rem;color:var(--muted)}
+.tbar .hd b{font:500 .82rem var(--mono);color:var(--ink);white-space:nowrap}
+.tbar .tr{height:8px;border-radius:4px;background:var(--void);margin-top:.35rem;overflow:hidden}
+.tbar .tr i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--solar),#ffd596);min-width:4px;transition:width .35s}
+form.mail{display:grid;gap:.7rem;margin-top:1.3rem;padding-top:1.2rem;border-top:1px solid var(--line)}
+form.mail label{font-size:.88rem;color:var(--muted)}
+form.mail input{width:100%;padding:.85rem 1rem;border-radius:11px;border:1px solid var(--line-strong);background:var(--void);color:var(--ink);font:inherit}
+form.mail input::placeholder{color:var(--dim)}
+.sent{margin-top:1.3rem;padding:1rem 1.1rem;border-radius:12px;border:1px solid rgba(98,214,166,.4);background:rgba(98,214,166,.08);font-size:.92rem}
+.sent b{color:var(--ok)}
+
+/* prix et sortie */
+.end{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:center}
+@media (max-width:820px){.end{grid-template-columns:minmax(0,1fr)}}
+.bigprice{display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem .8rem;margin-top:1.2rem}
+.bigprice b{font:700 clamp(2.6rem,5.6vw,3.8rem)/1 var(--display);letter-spacing:-.03em}
+.bigprice span{color:var(--muted)}
+.badges{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+.badges span{font-size:.84rem;padding:.3rem .7rem;border-radius:999px;background:var(--indigo-soft);border:1px solid var(--line)}
+.door{border-radius:22px;padding:clamp(1.5rem,3vw,2.2rem);border:1px solid var(--line-strong);background:radial-gradient(circle at 85% 0,rgba(116,119,255,.35),transparent 55%),var(--panel);display:grid;gap:.9rem}
+.door h3{font-size:clamp(1.4rem,2.6vw,1.9rem);font-weight:600;line-height:1.12}
+.door p{color:var(--muted)}
+.door .btn{justify-self:start}
+footer{border-top:1px solid var(--line);padding-block:2rem;color:var(--dim);font-size:.86rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:.6rem 2rem;justify-content:space-between}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.btn:hover{transform:none}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <span class="brand"><span class="mark" aria-hidden="true"></span>OrbitAI</span>
+    <nav class="switch" aria-label="Maquette : choisir la page métier">
+      <a href="#avocats" id="sw-avocats">Avocats</a>
+      <a href="#comptables" id="sw-comptables">Comptables</a>
+      <a href="#cgp" id="sw-cgp">Patrimoine</a>
+    </nav>
+    <a class="btn btn-indigo btn-sm" href="https://cal.com/sina-movaghar-9rfpo3/30min" target="_blank" rel="noreferrer">Réserver une démo</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div class="h-top">
+      <div>
+        <p class="eyebrow" id="hEyebrow"></p>
+        <h1 id="hTitle"></h1>
+      </div>
+      <div>
+        <p class="lede" id="hLede"></p>
+        <div class="cta-row">
+          <a class="btn btn-indigo" href="https://cal.com/sina-movaghar-9rfpo3/30min" target="_blank" rel="noreferrer">Réserver une démo personnalisée</a>
+          <button class="btn btn-ghost" type="button" id="goSim">Calculer mon gain</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="app" id="app">
+      <div class="app-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span id="appTitle"></span><span class="fr">Hébergé en France</span></div>
+      <div class="app-body">
+        <div class="side" id="side"></div>
+        <div class="main">
+          <div class="conv">
+            <div class="me"><b id="cAgent"></b><span id="cAsk"></span></div>
+            <ol class="steps" id="cSteps"></ol>
+            <div class="doc reveal" id="cDoc"></div>
+            <div class="after-run reveal" id="cAfter">
+              <span>C'est un exemple. En démo, cet agent travaille sur vos propres dossiers.</span>
+              <a class="btn btn-solar btn-sm" href="https://cal.com/sina-movaghar-9rfpo3/30min" target="_blank" rel="noreferrer">Le voir sur mes dossiers</a>
+            </div>
+          </div>
+          <div class="composer">
+            <p>Cliquez sur un agent pour le voir travailler. L'agent prépare, vous validez.</p>
+            <button class="btn btn-ghost btn-sm" type="button" id="replay">Rejouer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="note" style="text-align:center;margin-top:1rem">Simulation de l'interface, avec un contenu d'exemple.</p>
+  </div>
+</section>
+
+<section class="band alt">
+  <div class="wrap">
+    <p class="eyebrow" style="--c:var(--solar)">Résultats</p>
+    <h2 id="caseTitle"></h2>
+    <div class="cases" id="cases"></div>
+    <p class="note" style="margin-top:1rem">Estimations issues des usages constatés.</p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <p class="eyebrow" style="--c:var(--risk)">Confidentialité</p>
+    <h2 id="confTitle"></h2>
+    <p class="lede" id="confLede"></p>
+    <div class="two">
+      <div class="col">
+        <h3>Avec ChatGPT, Copilot ou Gemini</h3>
+        <dl>
+          <div><dt>Souveraineté</dt><dd>Hébergement aux États-Unis. Le Cloud Act permet aux autorités américaines d'exiger l'accès aux données détenues par une société américaine, sans vous en informer.</dd></div>
+          <div><dt>Conformité</dt><dd>Secret professionnel, secret bancaire, données de santé, données salariales. Chaque métier a son régime. Aucun ne prévoit d'exception pour l'intelligence artificielle.</dd></div>
+          <div><dt>Traçabilité</dt><dd>Qui utilise quoi, avec quelles données, pour quel résultat. Sans espace commun, il n'y a ni traçabilité ni preuve de conformité si on vous le demande un jour.</dd></div>
+        </dl>
+      </div>
+      <div class="col good">
+        <h3>Avec OrbitAI</h3>
+        <dl>
+          <div><dt>Hébergement</dt><dd>OrbitAI est hébergé par Scaleway, cloud français basé à Paris. Vos données ne transitent jamais par des serveurs étrangers.</dd></div>
+          <div><dt>Entraînement</dt><dd>Vos données ne sont jamais utilisées pour entraîner des modèles. DPA disponible sur demande.</dd></div>
+          <div><dt>Contrôle</dt><dd>Un espace commun pour toute l'équipe, avec des accès et des usages contrôlés.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="simulateur">
+  <div class="wrap">
+    <p class="eyebrow" style="--c:var(--solar)">Simulateur</p>
+    <h2 id="simTitle"></h2>
+    <p class="lede">Cochez vos tâches chronophages. Le calcul se fait sous vos yeux, sans inscription.</p>
+    <div class="sim">
+      <div>
+        <div class="field" style="margin-top:0">
+          <div class="lab"><span>Quelles tâches vous coûtent le plus de temps&nbsp;?</span><span class="val" id="selCount"></span></div>
+          <div class="chips" id="chips"></div>
+        </div>
+        <div class="sliders">
+          <div class="field">
+            <label for="hoursAll"><span>Heures par mois et par tâche, tout le cabinet</span><output id="hoursAllOut" for="hoursAll"></output></label>
+            <input type="range" id="hoursAll" min="2" max="80" step="2" value="20">
+          </div>
+          <div class="field">
+            <label for="rate"><span>Coût horaire chargé moyen</span><output id="rateOut" for="rate"></output></label>
+            <input type="range" id="rate" min="20" max="150" step="5" value="45">
+          </div>
+        </div>
+        <p class="note" style="margin-top:1.2rem;max-width:60ch">Calcul&nbsp;: heures par mois × 11 mois travaillés × part automatisable de la tâche (50 à 80&nbsp;% selon la tâche) × 65&nbsp;% de réalisation effective. C'est un ordre de grandeur.</p>
+      </div>
+      <aside class="result" aria-label="Votre estimation">
+        <span class="k">Gain estimé</span>
+        <p class="eur"><span id="resEur"></span><small>par an</small></p>
+        <p class="hrs"><b id="resHrs"></b>&nbsp;heures récupérables par an</p>
+        <div class="tbars" id="tbars"></div>
+        <form class="mail" id="planForm" novalidate>
+          <label for="planMail">Recevoir le détail et le plan de déploiement par mail</label>
+          <input id="planMail" type="email" required autocomplete="email" placeholder="prenom@cabinet.fr">
+          <button class="btn btn-solar" type="submit">Recevoir mon plan</button>
+          <p class="note" id="planErr">Aucune newsletter, aucun partage à des tiers.</p>
+        </form>
+        <div class="sent" id="planSent" hidden><b>C'est noté.</b> Prototype&nbsp;: aucun mail n'est parti et rien n'est enregistré.</div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap end">
+    <div>
+      <p class="eyebrow">Tarif</p>
+      <div class="bigprice"><b>49&nbsp;€&nbsp;HT</b><span>par mois et par utilisateur</span></div>
+      <div class="badges"><span>Sans engagement</span><span>1 mois d'essai gratuit, sans carte bancaire</span></div>
+      <p class="note" style="margin-top:1rem;max-width:52ch">Inclus&nbsp;: tous les modèles d'IA, les agents métier, les connecteurs à vos outils, l'hébergement en France, le paramétrage et la formation.</p>
+    </div>
+    <div class="door">
+      <h3 id="endTitle"></h3>
+      <p>30 min en visio, sur vos propres cas d'usage, sans engagement. On choisit ensemble le premier agent et on le teste sur un cas réel.</p>
+      <a class="btn btn-indigo" href="https://cal.com/sina-movaghar-9rfpo3/30min" target="_blank" rel="noreferrer">Réserver une démo personnalisée</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>OrbitAI · prototype de pages d'atterrissage par métier</span>
+    <span>Le sélecteur en pointillé n'existe que dans la maquette. Les formulaires n'envoient rien.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id)};
+var fmt=new Intl.NumberFormat("fr-FR");
+var REDUCED=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function each(l,fn){Array.prototype.forEach.call(l,fn)}
+var ARROW='<svg width="22" height="14" viewBox="0 0 22 14" fill="none" aria-hidden="true"><path d="M1 7h19M14.5 1.5 20 7l-5.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+/* Parts automatisables : celles du simulateur actuel d'orbitai.fr */
+var AUTO={cr:.8,mails:.5,reporting:.75,devis:.6,relances:.7,saisie:.8,docs:.65,slides:.7,dossiers:.6,facturation:.7,prospection:.6};
+var CASES={
+  iifa:{who:"IIFA · formation média",before:"1 jour",after:"2 h",txt:"pour créer un support de formation et son quiz"},
+  d2d:{who:"DesktoDesk · gestion de bureaux",before:"30 min",after:"5 min",txt:"pour préparer un rendez-vous"},
+  fSyn:{who:"FRALXR · cabinet comptable",before:"1 jour",after:"1 h",txt:"pour une synthèse comptable"},
+  fVeille:{who:"FRALXR · cabinet comptable",before:"2 h",after:"15 min",txt:"de veille juridique par semaine"}
+};
+
+/* Avocats et experts-comptables : agents, accroches et connecteurs du site.
+   Gestion de patrimoine : proposition à valider, ce métier n'existe pas encore sur le site. */
+var PRO={
+ avocats:{
+  eyebrow:"Pour les avocats et les juristes",
+  title:"L'IA de votre cabinet. <em>Vos dossiers clients ne quittent jamais la France.</em>",
+  lede:"5 agents préconfigurés pour votre métier, connectés à Outlook, Google Drive et Notion. Essayez-les ci-dessous.",
+  app:"orbitai.fr · espace du cabinet",
+  conn:["Outlook","Google Drive","Notion"],
+  agents:[
+   {n:"Analyse de dossier",t:"2-3h par dossier",ask:"Analyse ce dossier et liste les points de vigilance.",
+    steps:["Lecture des pièces du dossier dans Google Drive","Repérage des dates, des parties et des montants","Rédaction de la note de synthèse"],
+    doc:"Note de synthèse du dossier",secs:["Faits et chronologie","Points de vigilance","Pièces manquantes"],file:"Note_de_synthese.docx"},
+   {n:"Recherche juridique confidentielle",t:"30 min par recherche",ask:"Que dit la jurisprudence récente sur cette clause de non-concurrence ?",
+    steps:["Recherche dans votre base documentaire","Recherche des décisions publiées","Rédaction de la réponse avec ses références"],
+    doc:"Réponse sourcée",secs:["Réponse courte","Décisions citées","Limites et points à vérifier"],file:"Recherche_juridique.docx"},
+   {n:"Rédaction d'actes et conclusions",t:"1-2h par document",ask:"Prépare un premier jet de conclusions à partir de la note et des pièces.",
+    steps:["Lecture de la note de synthèse et des pièces","Reprise de votre modèle de conclusions","Rédaction du premier jet"],
+    doc:"Projet de conclusions",secs:["Rappel des faits et de la procédure","Discussion","Par ces motifs"],file:"Projet_de_conclusions.docx"},
+   {n:"Synthèse de jurisprudence",t:"1-2h par synthèse",ask:"Synthétise ces décisions et dégage la tendance.",
+    steps:["Lecture des décisions fournies","Classement par juridiction et par date","Rédaction de la synthèse"],
+    doc:"Synthèse de jurisprudence",secs:["Tendance générale","Décisions clés","Points de divergence"],file:"Synthese_jurisprudence.docx"},
+   {n:"Assistant administratif cabinet",t:"4-5h par semaine",ask:"Prépare les relances de pièces manquantes pour mes dossiers en cours.",
+    steps:["Lecture de vos échanges dans Outlook","Repérage des pièces en attente","Rédaction des relances"],
+    doc:"Relances prêtes à envoyer",secs:["Dossiers concernés","Brouillons de mails","Échéances à venir"],file:"Relances_pieces.docx"}
+  ],
+  caseTitle:"Ce que nos clients ont mesuré",cases:["fVeille","iifa","d2d"],
+  confTitle:"Le secret professionnel ne prévoit pas d'exception pour l'IA",
+  confLede:"Un dossier client collé dans un outil grand public sort de votre cabinet. Voici ce qui change avec un espace hébergé en France.",
+  simTitle:"Combien d'heures l'IA peut-elle rendre à votre cabinet ?",
+  tasks:[["dossiers","Analyse de gros dossiers"],["docs","Recherche documentaire"],["facturation","Facturation"],["relances","Relances et recouvrement"],["saisie","Saisie et ressaisie de données"],["cr","Comptes rendus de réunion"],["mails","Tri et réponse aux mails"]],
+  sel:["dossiers","docs","facturation"],
+  endTitle:"Voyez OrbitAI travailler sur un de vos dossiers"
+ },
+ comptables:{
+  eyebrow:"Pour les experts-comptables",
+  title:"L'IA de votre cabinet comptable. <em>Données fiscales et bilans clients en sécurité.</em>",
+  lede:"5 agents préconfigurés pour votre métier, connectés à Outlook, Google Drive et Airtable. Essayez-les ci-dessous.",
+  app:"orbitai.fr · espace du cabinet",
+  conn:["Outlook","Google Drive","Airtable"],
+  agents:[
+   {n:"Analyse de bilan",t:"2 à 5h / semaine",ask:"Analyse le bilan de ce client et prépare les points à lui présenter.",
+    steps:["Lecture du bilan et du compte de résultat","Calcul des ratios et des variations","Rédaction des points à présenter"],
+    doc:"Analyse du bilan",secs:["Chiffres clés et variations","Points d'attention","Questions à poser au client"],file:"Analyse_bilan.xlsx"},
+   {n:"Lettre de mission",t:"2 à 5h / semaine",ask:"Prépare la lettre de mission pour ce nouveau client.",
+    steps:["Reprise de votre modèle de lettre","Reprise des informations du client","Rédaction de la lettre"],
+    doc:"Lettre de mission",secs:["Nature et étendue de la mission","Honoraires","Obligations réciproques"],file:"Lettre_de_mission.docx"},
+   {n:"Réponse client TVA & charges",t:"2 à 5h / semaine",ask:"Réponds à la question de ce client sur la TVA de sa facture.",
+    steps:["Lecture du mail du client dans Outlook","Recherche dans votre base documentaire","Rédaction de la réponse dans votre ton"],
+    doc:"Brouillon de réponse",secs:["Réponse en clair","Référence à l'appui","Point à valider par vous"],file:"Reponse_client.docx"},
+   {n:"Veille Loi de Finances",t:"2 à 5h / semaine",ask:"Qu'est-ce qui change cette année pour mes clients TPE ?",
+    steps:["Lecture des textes publiés","Tri par type de client","Rédaction de la note"],
+    doc:"Note de veille",secs:["Mesures qui touchent vos clients","Dates d'entrée en vigueur","Clients à prévenir"],file:"Veille_loi_de_finances.docx"},
+   {n:"Synthèse de dossier fiscal",t:"2 à 5h / semaine",ask:"Fais la synthèse de ce dossier à partir des données brutes.",
+    steps:["Lecture des données comptables brutes","Contrôles de cohérence","Rédaction de la synthèse"],
+    doc:"Synthèse du dossier",secs:["Situation","Écarts relevés","Suites à donner"],file:"Synthese_dossier.xlsx"}
+  ],
+  caseTitle:"Mesuré dans un cabinet comptable",cases:["fSyn","fVeille","iifa"],
+  confTitle:"Bilans, paies, données fiscales : rien ne sort de France",
+  confLede:"Vos clients vous confient leurs chiffres. Voici ce qui change avec un espace hébergé en France.",
+  simTitle:"Combien d'heures l'IA peut-elle rendre à votre cabinet ?",
+  tasks:[["saisie","Saisie et ressaisie de données"],["reporting","Reporting et analyse de données"],["relances","Relances et recouvrement"],["facturation","Facturation"],["docs","Recherche de documents"],["slides","Création de PowerPoint chartés"],["mails","Tri et réponse aux mails"]],
+  sel:["saisie","reporting","relances"],
+  endTitle:"Voyez OrbitAI travailler sur un de vos dossiers clients"
+ },
+ cgp:{
+  eyebrow:"Pour les conseillers en gestion de patrimoine",
+  title:"L'IA du conseiller en patrimoine. <em>Les données de vos clients restent en France.</em>",
+  lede:"5 agents configurés pour votre métier, connectés à Outlook, Google Drive et à votre calendrier. Essayez-les ci-dessous.",
+  app:"orbitai.fr · espace du cabinet",
+  conn:["Outlook","Google Drive","Calendrier"],
+  agents:[
+   {n:"Préparation de rendez-vous",t:"",ask:"Prépare mon rendez-vous de demain avec ce client.",
+    steps:["Lecture du dossier client et des derniers échanges","Repérage des échéances et des changements de situation","Rédaction du brief"],
+    doc:"Brief de rendez-vous",secs:["Situation et objectifs du client","Sujets à aborder","Documents à demander"],file:"Brief_rendez-vous.docx"},
+   {n:"Synthèse patrimoniale",t:"",ask:"Fais la synthèse de la situation patrimoniale de ce foyer.",
+    steps:["Lecture des documents remis par le client","Classement des actifs, des revenus et des charges","Rédaction de la synthèse"],
+    doc:"Synthèse patrimoniale",secs:["Composition du patrimoine","Revenus et charges","Points d'attention"],file:"Synthese_patrimoniale.docx"},
+   {n:"Compte rendu d'entretien",t:"",ask:"Rédige le compte rendu du rendez-vous à partir de mes notes.",
+    steps:["Lecture de vos notes","Structuration par sujet","Liste des actions et des échéances"],
+    doc:"Compte rendu d'entretien",secs:["Ce qui a été dit","Décisions prises","Actions et échéances"],file:"Compte_rendu_entretien.docx"},
+   {n:"Lettre de mission",t:"",ask:"Prépare la lettre de mission à partir de mon modèle.",
+    steps:["Reprise de votre modèle de lettre","Reprise des informations du client","Rédaction de la lettre"],
+    doc:"Lettre de mission",secs:["Objet de la mission","Périmètre et honoraires","Informations du client"],file:"Lettre_de_mission.docx"},
+   {n:"Veille fiscale et réglementaire",t:"",ask:"Qu'est-ce qui change ce mois-ci pour mes clients ?",
+    steps:["Lecture des textes publiés","Tri par profil de client","Rédaction de la note"],
+    doc:"Note de veille",secs:["Nouveautés du mois","Clients concernés","Actions proposées"],file:"Note_de_veille.docx"}
+  ],
+  caseTitle:"Ce que nos clients ont mesuré",cases:["d2d","fVeille","iifa"],
+  confTitle:"Patrimoine, revenus, situation familiale : rien ne sort de France",
+  confLede:"Vos clients vous confient ce qu'ils ont de plus sensible. Voici ce qui change avec un espace hébergé en France.",
+  simTitle:"Combien d'heures l'IA peut-elle rendre à votre cabinet ?",
+  tasks:[["cr","Comptes rendus d'entretien"],["reporting","Reporting et analyse de données"],["slides","Création de PowerPoint chartés"],["devis","Propositions commerciales"],["prospection","Prospection commerciale"],["docs","Recherche de documents"],["mails","Tri et réponse aux mails"]],
+  sel:["cr","reporting","slides"],
+  endTitle:"Voyez OrbitAI travailler sur un de vos dossiers clients"
+ }
+};
+
+var key=null, P=null, curAgent=0, timers=[];
+var state={sel:[],base:20,rate:45};
+function later(fn,ms){timers.push(setTimeout(fn,ms))}
+
+/* ---------- l'application : un agent travaille ---------- */
+function runAgent(i,animate){
+  timers.forEach(clearTimeout);timers=[];
+  curAgent=i;var a=P.agents[i];
+  each($("side").querySelectorAll(".agb"),function(b,k){b.setAttribute("aria-pressed",k===i?"true":"false")});
+  $("cAgent").textContent="@"+a.n;
+  $("cSteps").innerHTML=a.steps.map(function(s){return '<li class="step"><i></i>'+esc(s)+'</li>'}).join("");
+  $("cDoc").innerHTML='<div class="doc-h"><b>'+esc(a.doc)+'</b><span>Brouillon à valider</span></div>'+
+    a.secs.map(function(s,k){var w=[[94,82,61],[88,70],[91,77,48]][k%3];
+      return '<div class="sec reveal"><h5>'+esc(s)+'</h5>'+w.map(function(x){return '<i style="width:'+x+'%"></i>'}).join("")+'</div>'}).join("")+
+    '<div class="file reveal"><i aria-hidden="true"></i><span>'+esc(a.file)+'<br><span style="color:var(--dim)">Fichier prêt à l\'emploi, généré dans le chat</span></span></div>';
+  var ask=$("cAsk"), steps=$("cSteps").children, doc=$("cDoc"), parts=doc.querySelectorAll(".reveal"), after=$("cAfter");
+  if(!animate){
+    ask.textContent=a.ask;ask.classList.remove("caret");
+    each(steps,function(s){s.className="step ok"});
+    doc.classList.add("in");each(parts,function(p){p.classList.add("in")});after.classList.add("in");
+    return;
+  }
+  ask.textContent="";ask.classList.add("caret");doc.classList.remove("in");after.classList.remove("in");
+  var n=0, per=Math.max(12,Math.round(900/a.ask.length));
+  (function type(){
+    n++;ask.textContent=a.ask.slice(0,n);
+    if(n<a.ask.length){later(type,per);return}
+    ask.classList.remove("caret");
+    var t=250;
+    each(steps,function(s){
+      later(function(){s.className="step run"},t);t+=750;
+      later(function(){s.className="step ok"},t);
+    });
+    later(function(){doc.classList.add("in")},t+150);
+    each(parts,function(p,k){later(function(){p.classList.add("in")},t+350+k*260)});
+    later(function(){after.classList.add("in")},t+350+parts.length*260+200);
+  })();
+}
+$("replay").addEventListener("click",function(){runAgent(curAgent,!REDUCED)});
+$("goSim").addEventListener("click",function(){$("simulateur").scrollIntoView({behavior:REDUCED?"auto":"smooth"})});
+
+/* ---------- calcul du gain ---------- */
+function fill(el){el.style.setProperty("--fill",(el.value-el.min)/(el.max-el.min)*100+"%")}
+function renderSim(){
+  var rows=P.tasks.filter(function(t){return state.sel.indexOf(t[0])>=0}).map(function(t){
+    var hy=Math.round(state.base*11*AUTO[t[0]]*.65);
+    return {id:t[0],label:t[1],hy:hy,eur:Math.round(hy*state.rate)};
+  }).sort(function(a,b){return b.hy-a.hy});
+  var totalH=rows.reduce(function(s,r){return s+r.hy},0);
+  var totalE=Math.round(rows.reduce(function(s,r){return s+r.eur},0)/100)*100;
+  var max=Math.max.apply(null,rows.map(function(r){return r.hy}).concat([1]));
+  each($("chips").children,function(c){c.setAttribute("aria-pressed",state.sel.indexOf(c.dataset.id)>=0?"true":"false")});
+  $("selCount").textContent=rows.length+(rows.length>1?" tâches":" tâche");
+  $("hoursAllOut").textContent=state.base+" h";$("rateOut").textContent=state.rate+" €";
+  fill($("hoursAll"));fill($("rate"));
+  $("resEur").textContent=fmt.format(totalE)+" €";$("resHrs").textContent=fmt.format(totalH);
+  $("tbars").innerHTML=rows.map(function(r){
+    return '<div class="tbar"><div class="hd"><span>'+esc(r.label)+'</span><b>'+fmt.format(r.hy)+' h · '+fmt.format(r.eur)+' €</b></div><div class="tr"><i style="width:'+(r.hy/max*100).toFixed(1)+'%"></i></div></div>'}).join("");
+  $("tbars").hidden=!rows.length;
+}
+$("hoursAll").addEventListener("input",function(e){state.base=+e.target.value;renderSim()});
+$("rate").addEventListener("input",function(e){state.rate=+e.target.value;renderSim()});
+(function(){
+  var f=$("planForm"), base=$("planErr").textContent;
+  f.addEventListener("submit",function(e){
+    e.preventDefault();
+    var err=$("planErr");
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test($("planMail").value.trim())){
+      err.textContent="Cette adresse ne semble pas complète. Exemple : prenom@cabinet.fr";err.style.color="var(--risk)";$("planMail").focus();return;
+    }
+    err.textContent=base;err.style.color="";f.hidden=true;$("planSent").hidden=false;
+  });
+})();
+
+/* ---------- une page par métier, choisie par l'ancre de l'adresse ---------- */
+function setPro(k){
+  key=k;P=PRO[k];
+  ["avocats","comptables","cgp"].forEach(function(x){
+    if(x===k)$("sw-"+x).setAttribute("aria-current","page");else $("sw-"+x).removeAttribute("aria-current")});
+  $("hEyebrow").textContent=P.eyebrow;$("hTitle").innerHTML=P.title;$("hLede").textContent=P.lede;
+  $("appTitle").textContent=P.app;
+  $("caseTitle").textContent=P.caseTitle;$("confTitle").textContent=P.confTitle;$("confLede").textContent=P.confLede;
+  $("simTitle").textContent=P.simTitle;$("endTitle").textContent=P.endTitle;
+  $("side").innerHTML='<h4>Vos agents</h4>'+P.agents.map(function(a,i){
+    return '<button type="button" class="agb" data-i="'+i+'"><span class="at">@'+(i+1)+'</span><span>'+esc(a.n)+(a.t?'<small>'+esc(a.t)+'</small>':'')+'</span></button>'}).join("")+
+    '<h4 style="margin-top:1rem">Connecteurs</h4><div class="conn">'+P.conn.map(function(c){return '<span>'+esc(c)+'</span>'}).join("")+'</div>';
+  each($("side").querySelectorAll(".agb"),function(b){b.addEventListener("click",function(){runAgent(+b.dataset.i,!REDUCED)})});
+  $("cases").innerHTML=P.cases.map(function(id){var c=CASES[id];
+    return '<article class="case"><p class="who">'+esc(c.who)+'</p><p class="shift"><s>'+esc(c.before)+'</s>'+ARROW+'<b>'+esc(c.after)+'</b></p><p class="txt">'+esc(c.txt)+'</p></article>'}).join("");
+  $("chips").innerHTML=P.tasks.map(function(t){return '<button type="button" class="chip" data-id="'+t[0]+'">'+esc(t[1])+'</button>'}).join("");
+  each($("chips").children,function(c){c.addEventListener("click",function(){
+    var i=state.sel.indexOf(c.dataset.id);if(i>=0)state.sel.splice(i,1);else state.sel.push(c.dataset.id);renderSim()})});
+  state.sel=P.sel.slice();
+  $("planForm").hidden=false;$("planSent").hidden=true;
+  renderSim();runAgent(0,false);
+}
+function route(){
+  var h=location.hash.slice(1);
+  if(PRO[h]){if(h!==key)setPro(h)}
+  else if(!key)setPro("avocats");
+}
+window.addEventListener("hashchange",route);
+route();
+})();
+</script>
+
+</body>
+</html>
