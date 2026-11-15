@@ -829,7 +829,7 @@ var TASKS=[
  {id:"mails",label:"Tri et réponse aux mails",short:"Mails",auto:.5,agent:"Agent Boîte mail",
   what:"Il trie, priorise et résume les emails entrants, puis prépare des réponses personnalisées dans votre ton et selon vos règles de service.",
   details:["Résumé de la boîte mail du matin en 3 lignes chrono","Brouillons de réponses dans votre ton prêts à valider","Classement automatique des demandes par priorité, projet ou destinataire"]},
- {id:"reporting",label:"Reporting et tableaux de bord",short:"Reporting",auto:.75,agent:"Agent Reporting",
+ {id:"reporting",label:"Reporting et analyse de données",short:"Reporting",auto:.75,agent:"Agent Reporting",
   what:"Il consolide les données de vos fichiers et outils pour produire automatiquement les reporting récurrents au format attendu par votre direction ou vos clients.",
   details:["Dashboard hebdomadaire envoyé automatiquement par mail","PowerPoint de synthèse mensuelle aux couleurs et chartes de l'entreprise","Alerte sur les écarts par rapport aux objectifs et aux périodes précédentes"]},
  {id:"devis",label:"Devis et propositions",short:"Devis",auto:.6,agent:"Agent Propositions",
@@ -844,7 +844,7 @@ var TASKS=[
  {id:"docs",label:"Recherche de documents",short:"Documents",auto:.65,agent:"Agent Recherche documentaire",
   what:"Il répond aux questions métier en s'appuyant sur votre base documentaire, vos dossiers clients et votre SharePoint, avec les sources à l'appui.",
   details:["Réponse à une question juridique avec article et référence précise","Synthèse d'un dossier client en 30 secondes","Recherche cross-documents sur plusieurs bases et répertoires"]},
- {id:"slides",label:"Formalisation de slides",short:"Slides",auto:.7,agent:"Agent Slides",
+ {id:"slides",label:"Création de PowerPoint chartés",short:"Slides",auto:.7,agent:"Agent Slides",
   what:"Il transforme vos notes, données ou rapports en présentations PowerPoint structurées et chartées à votre identité visuelle.",
   details:["PowerPoint généré à partir de notes, données brutes ou rapports","Mise en forme chartée selon votre template institutionnel","Graphiques, titres de section et transitions générés automatiquement"]},
  {id:"contenus",label:"Contenus marketing",short:"Contenus",auto:.65,agent:"Agent Contenus",
@@ -863,7 +863,7 @@ var TASKS=[
 var BY={};TASKS.forEach(function(t){BY[t.id]=t});
 var MONTHS=11, REAL=.65;
 
-var state={sel:["devis","relances","dossiers"],hours:{},base:20,rate:45,unlocked:false,touched:false};
+var state={sel:["reporting","slides","devis","relances","dossiers"],hours:{},base:20,rate:45,unlocked:false,touched:false};
 
 function calc(){
   var rows=state.sel.map(function(id){
@@ -900,7 +900,7 @@ function paintTotals(){
 
 /* ---------- puces ---------- */
 /* les tâches métier, connectées aux outils, passent avant les usages que tout assistant sait déjà faire */
-var ORDER=["devis","relances","dossiers","facturation","saisie","prospection","reporting","docs","slides","contenus","cr","mails"];
+var ORDER=["reporting","slides","devis","relances","dossiers","facturation","saisie","prospection","docs","contenus","cr","mails"];
 var chips=$("chips");
 ORDER.map(function(id){return BY[id]}).forEach(function(t){
   var b=document.createElement("button");
@@ -1087,7 +1087,7 @@ function render(){
   fill($("hoursAll"));fill($("rate"));
   $("resNote").textContent=!n?"Cochez une tâche pour lancer le calcul."
     :state.touched?"Ordre de grandeur, sur la base de vos déclarations."
-    :"Exemple préchargé : 3 tâches, 20 h par mois chacune. Modifiez pour voir votre chiffre.";
+    :"Exemple préchargé : 5 tâches, 20 h par mois chacune. Modifiez pour voir votre chiffre.";
   renderBars(c);renderRefine(c);renderPlan(c);
   tweenTo(c.totalE,c.totalH);
 }
