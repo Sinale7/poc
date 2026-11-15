@@ -10,9 +10,9 @@
 <title>OrbitAI Refonte</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap">
 <style>
-/* Layout : une salle de contrôle autour d'une orbite utile. L'orbite du hero EST le simulateur :
-   chaque tâche cochée devient une planète, le soleil central affiche le gain. Le résultat
-   s'amarre ensuite en bas d'écran et suit le visiteur jusqu'à la prise de rendez-vous. */
+/* Layout : le hero montre le produit au travail (une demande traitée, puis le temps avant et après).
+   Le simulateur vient juste dessous ; son résultat s'amarre ensuite en bas d'écran et suit
+   le visiteur jusqu'à la prise de rendez-vous. Indigo = OrbitAI, ambre = votre gain. */
 :root{
   color-scheme:dark;
   --void:#06060f;          /* fond, noir indigo */
@@ -85,13 +85,11 @@ button{font:inherit;color:inherit}
 .hero{position:relative;overflow:hidden;padding-block:clamp(32px,4.5vw,56px) clamp(48px,7vw,88px)}
 #stars{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .hero::after{content:"";position:absolute;right:-18%;top:-30%;width:70%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(116,119,255,.2),transparent 62%);pointer-events:none}
-.hero .wrap{position:relative;z-index:1;display:grid;gap:clamp(24px,3vw,40px) clamp(32px,5vw,72px);grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);grid-template-areas:"copy stage" "ctrl stage";align-items:start}
-.h-copy{grid-area:copy;min-width:0}
-.h-ctrl{grid-area:ctrl;min-width:0}
-.h-stage{grid-area:stage;min-width:0;align-self:center}
-@media (max-width:960px){.hero .wrap{grid-template-columns:minmax(0,1fr);grid-template-areas:"copy" "stage" "ctrl"}}
+.hero .wrap{position:relative;z-index:1;display:grid;gap:clamp(24px,3vw,40px) clamp(32px,5vw,72px);grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}
+.h-copy,.h-stage{min-width:0}
+@media (max-width:960px){.hero .wrap{grid-template-columns:minmax(0,1fr)}}
 /* titre du hero */
-.hero h1{font-size:clamp(2.2rem,4.3vw,3.5rem);line-height:1.04;font-weight:700;margin-top:1.1rem}
+.hero h1{font-size:clamp(2.2rem,3.9vw,3.2rem);line-height:1.04;font-weight:700;margin-top:1.1rem}
 .hero h1 em{font-style:normal;color:var(--solar)}
 .hero .lede{color:var(--muted);font-size:clamp(1rem,1.5vw,1.15rem);max-width:54ch;margin-top:1.2rem}
 .field{margin-top:1.5rem}
@@ -118,23 +116,50 @@ details.how p{margin-top:.5rem;max-width:60ch}
 .refine .row b{font:500 .86rem var(--mono);color:var(--ink);min-width:4.2em;text-align:right}
 .cta-row{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.7rem}
 
-/* orbite */
-.stage{position:relative;aspect-ratio:1;width:100%;max-width:560px;margin-inline:auto;container-type:inline-size}
-.rings{position:absolute;inset:0;width:100%;height:100%}
-.rings circle{fill:none;stroke:var(--line-strong);stroke-width:.25;stroke-dasharray:.6 1.4}
-.rings circle.solid{stroke:var(--line);stroke-dasharray:none}
-.core{position:absolute;left:50%;top:50%;width:38%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;display:grid;place-content:center;justify-items:center;gap:.9cqw;text-align:center;background:radial-gradient(circle at 50% 38%,rgba(255,181,71,.3),rgba(255,181,71,.07) 58%,transparent 74%),var(--deep);border:1px solid rgba(255,181,71,.5);box-shadow:0 0 14cqw -3cqw rgba(255,181,71,.5),inset 0 0 6cqw rgba(255,181,71,.12)}
-.core .k{font:500 max(9px,1.9cqw)/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.core .eur{font:700 max(19px,6.3cqw)/1 var(--display);color:var(--solar);font-variant-numeric:tabular-nums;letter-spacing:-.03em;white-space:nowrap}
-.core .hrs{font:500 max(10px,2.3cqw)/1.2 var(--body);color:var(--ink)}
-.planet{position:absolute;left:50%;top:50%;will-change:transform}
-.planet i{display:block;width:var(--d);height:var(--d);border-radius:50%;background:radial-gradient(circle at 34% 30%,#c9caff,var(--indigo) 52%,#26288a);box-shadow:0 0 3cqw rgba(116,119,255,.55);animation:pop .55s cubic-bezier(.2,1.5,.4,1) both;transition:width .35s,height .35s}
-.planet span{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:5px;white-space:nowrap;font:500 11px/1.25 var(--mono);color:var(--muted);text-align:center}
-.planet span b{display:block;color:var(--ink);font-weight:500}
-@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
-@media (max-width:560px){.planet span{font-size:9.5px}.planet span b{display:none}}
-.stage-note{text-align:center;margin-top:1.1rem}
-.empty-core .eur{color:var(--dim)}
+/* démo du hero : une demande traitée, puis le temps avant et après */
+.demo{border:1px solid var(--line-strong);border-radius:20px;background:rgba(17,17,43,.9);overflow:hidden;box-shadow:0 50px 110px -50px rgba(116,119,255,.85)}
+.scen{display:flex;gap:6px;padding:.7rem .8rem;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.scen::-webkit-scrollbar{display:none}
+.sc{position:relative;flex:none;padding:.45rem .8rem;border-radius:9px;border:1px solid var(--line);background:transparent;color:var(--muted);font-size:.84rem;cursor:pointer;overflow:hidden;white-space:nowrap}
+.sc:hover{color:var(--ink)}
+.sc[aria-selected="true"]{color:var(--ink);border-color:var(--line-strong);background:var(--panel-2)}
+.sc::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--solar)}
+.sc.run::after{width:100%;transition:width var(--dur,6s) linear}
+.demo-body{padding:1.1rem;display:grid;gap:.8rem;align-content:start}
+.demo .msg.me{min-height:6.4em}
+.caret::after{content:"";display:inline-block;width:2px;height:1em;background:var(--indigo);vertical-align:-.15em;margin-left:2px;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.demo .msg.ai .sk,.demo .file{opacity:0;transform:translateY(6px);transition:opacity .35s,transform .35s}
+.demo .msg.ai .sk.in,.demo .file.in{opacity:1;transform:none}
+.ba{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1.4fr);gap:.7rem 1.2rem;align-items:end;padding:1.1rem;border-top:1px solid var(--line);background:var(--void)}
+.ba .k{display:block;font:500 .68rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:.45rem}
+.ba .before{display:block;position:relative;width:fit-content;font:600 clamp(1.2rem,2.4vw,1.6rem)/1.1 var(--display);color:var(--muted)}
+.ba .before::after{content:"";position:absolute;left:-5%;top:54%;height:2px;width:0;background:var(--risk);transition:width .4s}
+.ba.done .before::after{width:110%}
+.ba .after{display:block;font:700 clamp(2.3rem,4.8vw,3.4rem)/1 var(--display);color:var(--solar);letter-spacing:-.03em;opacity:.15;transform:scale(.9);transform-origin:left bottom;transition:opacity .4s,transform .5s cubic-bezier(.2,1.5,.4,1)}
+.ba.done .after{opacity:1;transform:none}
+.ba svg{color:var(--dim);margin-bottom:.5rem}
+.ba-cap{grid-column:1/-1;font-size:.88rem;color:var(--muted);min-height:1.5em}
+@media (max-width:560px){.demo .msg.me{min-height:8em}.ba-cap{min-height:3em}}
+.stage-note{text-align:center;margin-top:1rem}
+
+/* simulateur */
+.sim{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(24px,4vw,64px);margin-top:2.4rem;align-items:start}
+@media (max-width:900px){.sim{grid-template-columns:minmax(0,1fr)}}
+.sim-ctrl{min-width:0}
+.result{position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);min-width:0;border:1px solid rgba(255,181,71,.4);border-radius:20px;padding:1.6rem;background:radial-gradient(circle at 100% 0,rgba(255,181,71,.15),transparent 55%),var(--panel)}
+.result .k{font:500 .7rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.result .eur{font:700 clamp(2.6rem,6vw,4rem)/1 var(--display);color:var(--solar);letter-spacing:-.03em;font-variant-numeric:tabular-nums;margin-top:.6rem}
+.result .eur span{white-space:nowrap}
+.result .eur small{font:500 1rem var(--body);color:var(--ink);letter-spacing:0;margin-left:.5rem}
+.result .hrs{margin-top:.6rem;font-size:1.02rem}
+.tbars{display:grid;gap:.75rem;margin-top:1.4rem;padding-top:1.3rem;border-top:1px solid var(--line)}
+.tbar .hd{display:flex;justify-content:space-between;gap:1rem;font-size:.88rem;color:var(--muted)}
+.tbar .hd b{font:500 .82rem var(--mono);color:var(--ink);white-space:nowrap}
+.tbar .tr{height:8px;border-radius:4px;background:var(--void);margin-top:.35rem;overflow:hidden}
+.tbar .tr i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--solar),#ffd596);min-width:4px;transition:width .35s}
+.result .cta-row{margin-top:1.4rem}
+.result .note{margin-top:.9rem}
 
 /* plan */
 .plan-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:clamp(24px,4vw,56px);margin-top:2.6rem;align-items:start}
@@ -391,7 +416,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:.6rem 2rem;justify-content:space-be
     <a class="brand" href="#accueil"><span class="mark" aria-hidden="true"></span>OrbitAI</a>
     <span class="tag">Prototype</span>
     <nav aria-label="Sections">
-      <a href="#accueil">Simulateur</a>
+      <a href="#simulateur">Simulateur</a>
       <a href="#plateforme">Plateforme</a>
       <a href="#cas">Cas clients</a>
       <a href="#fondateur">Fondateur</a>
@@ -408,27 +433,52 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:.6rem 2rem;justify-content:space-be
     <div class="h-copy">
       <p class="eyebrow">IA d'entreprise hébergée en France</p>
       <h1>Récupérez les heures perdues. <em>Gardez vos données en France.</em></h1>
-      <p class="lede">OrbitAI configure des agents IA sur vos tâches et héberge l'ensemble en France. Cochez ce qui vous coûte du temps&nbsp;: l'estimation se calcule sous vos yeux, sans inscription.</p>
+      <p class="lede">OrbitAI configure des agents IA sur vos tâches et héberge l'ensemble en France. Voici ce que ça change sur des tâches réelles, chez nos clients.</p>
+      <div class="cta-row">
+        <a class="btn btn-indigo" href="https://cal.com/sina-movaghar-9rfpo3/30min" target="_blank" rel="noreferrer">Réserver une démo personnalisée</a>
+        <a class="btn btn-ghost" href="#simulateur">Calculer mon gain</a>
+      </div>
+      <p class="note" style="margin-top:.8rem">30 min en visio, sur vos propres cas d'usage, sans engagement.</p>
     </div>
 
     <div class="h-stage">
-      <div class="stage" id="stage" role="img" aria-label="Orbite des tâches sélectionnées autour du gain annuel estimé">
-        <svg class="rings" viewBox="0 0 100 100" aria-hidden="true">
-          <circle class="solid" cx="50" cy="50" r="49.5"/>
-          <circle cx="50" cy="50" r="27"/>
-          <circle cx="50" cy="50" r="35"/>
-          <circle cx="50" cy="50" r="43"/>
-        </svg>
-        <div class="core" id="core">
-          <span class="k">Gain estimé</span>
-          <span class="eur" id="coreEur">0&nbsp;€</span>
-          <span class="hrs"><span id="coreHrs">0</span>&nbsp;h par an</span>
+      <div class="demo" role="group" aria-label="Démonstration : une demande traitée dans OrbitAI, avec le temps avant et après">
+        <div class="win-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>orbitai.fr · votre espace IA</span><span class="fr">Hébergé en France</span></div>
+        <div class="scen" role="tablist" aria-label="Exemples de tâches" id="scen"></div>
+        <div class="demo-body">
+          <div class="msg me"><b id="dAgent"></b><br><span id="dAsk"></span></div>
+          <div class="msg ai" id="dAi">
+            <div class="sk" style="width:92%"></div><div class="sk" style="width:76%"></div><div class="sk" style="width:84%"></div><div class="sk" style="width:52%"></div>
+            <div class="file" id="dFile"><i aria-hidden="true"></i><span><span id="dFileName"></span><br><span style="color:var(--dim)">Fichier prêt à l'emploi, généré dans le chat</span></span></div>
+          </div>
+        </div>
+        <div class="ba" id="ba">
+          <div><span class="k">Avant</span><span class="before" id="baBefore"></span></div>
+          <svg width="26" height="16" viewBox="0 0 22 14" fill="none" aria-hidden="true"><path d="M1 7h19M14.5 1.5 20 7l-5.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div><span class="k">Avec OrbitAI</span><span class="after" id="baAfter"></span></div>
+          <p class="ba-cap" id="baCap"></p>
         </div>
       </div>
-      <p class="note stage-note" id="stageNote">Exemple préchargé&nbsp;: 3 tâches, 20&nbsp;h par mois chacune. Modifiez pour voir votre chiffre.</p>
+      <p class="note stage-note">Exemples d'échanges. Estimations issues des usages constatés.</p>
     </div>
+  </div>
+</section>
 
-    <div class="h-ctrl">
+<section class="refs" aria-label="Références">
+  <div class="wrap">
+    <div class="stat"><b>50+</b><span>projets IA déployés</span></div>
+    <div class="stat"><b>95&nbsp;%</b><span>de clients satisfaits</span></div>
+    <div class="marquee"><div class="run" id="refRun"></div></div>
+  </div>
+</section>
+
+<section class="band" id="simulateur">
+  <div class="wrap">
+    <p class="eyebrow" style="--c:var(--solar)">Simulateur</p>
+    <h2 style="margin-top:1rem">Combien d'heures l'IA peut-elle rendre à votre équipe&nbsp;?</h2>
+    <p class="lede">Cochez vos tâches chronophages. Le calcul se fait sous vos yeux, sans inscription.</p>
+    <div class="sim">
+      <div class="sim-ctrl">
       <div class="field" style="margin-top:0">
         <div class="lab"><span>Quelles tâches vous coûtent le plus de temps&nbsp;?</span><span class="val" id="selCount">3 tâches</span></div>
         <div class="chips" id="chips"></div>
@@ -448,21 +498,20 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:.6rem 2rem;justify-content:space-be
         <div class="refine" id="refine"></div>
         <p>Calcul&nbsp;: heures par mois × 11 mois travaillés × part automatisable de la tâche (50 à 80&nbsp;% selon la tâche) × 65&nbsp;% de réalisation effective. C'est un ordre de grandeur, fondé sur vos déclarations.</p>
       </details>
-      <div class="cta-row">
-        <a class="btn btn-solar" href="#plan">Voir mon plan en 3 agents
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3.5 8.5 8 13l4.5-4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a class="btn btn-ghost" href="https://cal.com/sina-movaghar-9rfpo3/30min" target="_blank" rel="noreferrer">Réserver 30 min en visio</a>
       </div>
+      <aside class="result" aria-label="Votre estimation">
+        <span class="k">Gain estimé</span>
+        <p class="eur"><span id="resEur">0&nbsp;€</span><small>par an</small></p>
+        <p class="hrs"><b id="resHrs">0</b>&nbsp;heures récupérables par an</p>
+        <div class="tbars" id="tbars"></div>
+        <div class="cta-row">
+          <a class="btn btn-solar" href="#plan">Voir mon plan en 3 agents
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v10M3.5 8.5 8 13l4.5-4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <p class="note" id="resNote"></p>
+      </aside>
     </div>
-  </div>
-</section>
-
-<section class="refs" aria-label="Références">
-  <div class="wrap">
-    <div class="stat"><b>50+</b><span>projets IA déployés</span></div>
-    <div class="stat"><b>95&nbsp;%</b><span>de clients satisfaits</span></div>
-    <div class="marquee"><div class="run" id="refRun"></div></div>
   </div>
 </section>
 
@@ -759,7 +808,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:.6rem 2rem;justify-content:space-be
     <span class="lbl">Votre estimation</span>
     <span class="v"><span id="dockEur"></span><small><span id="dockHrs"></span>&nbsp;h par an</small></span>
     <div class="acts">
-      <a class="btn btn-ghost btn-sm" href="#accueil" tabindex="-1">Modifier</a>
+      <a class="btn btn-ghost btn-sm" href="#simulateur" tabindex="-1">Modifier</a>
       <a class="btn btn-solar btn-sm" href="#plan" tabindex="-1">Recevoir mon plan</a>
     </div>
   </div>
@@ -839,7 +888,7 @@ function tweenTo(e,h){
 }
 function paintTotals(){
   var e=fmt.format(Math.round(shown.e/100)*100)+" €", h=fmt.format(Math.round(shown.h));
-  $("coreEur").textContent=e;$("coreHrs").textContent=h;
+  $("resEur").textContent=e;$("resHrs").textContent=h;
   $("dockEur").textContent=e;$("dockHrs").textContent=h;
 }
 
@@ -856,49 +905,70 @@ TASKS.forEach(function(t){
   chips.appendChild(b);
 });
 
-/* ---------- orbite ---------- */
-var stage=$("stage"), planets={}, size=stage.clientWidth||520, running=false, visible=true;
-var RINGS=[{r:.27,w:.11},{r:.35,w:-.075},{r:.43,w:.052}];
-var slotSeq=0;
-function syncPlanets(c){
+/* ---------- barres par tâche (à l'échelle, en heures par an) ---------- */
+function renderBars(c){
+  var box=$("tbars"), keep={};
   var max=Math.max.apply(null,c.rows.map(function(r){return r.hy}).concat([1]));
-  Object.keys(planets).forEach(function(id){
-    if(state.sel.indexOf(id)<0){planets[id].el.remove();delete planets[id]}
-  });
-  c.rows.forEach(function(r){
-    var p=planets[r.t.id];
-    if(!p){
-      var el=document.createElement("div");el.className="planet";
-      el.innerHTML="<i></i><span>"+esc(r.t.short)+"<b></b></span>";
-      stage.appendChild(el);
-      p=planets[r.t.id]={el:el,ring:slotSeq%3,phase:slotSeq*2.399963,lab:el.querySelector("b")};
-      slotSeq++;
+  c.ranked.forEach(function(r,i){
+    var id="tb-"+r.t.id, el=$(id);keep[id]=1;
+    if(!el){
+      el=document.createElement("div");el.className="tbar";el.id=id;
+      el.innerHTML='<div class="hd"><span>'+esc(r.t.label)+'</span><b></b></div><div class="tr"><i></i></div>';
+      box.appendChild(el);
     }
-    var d=4.6+4.4*(r.hy/max);
-    p.el.style.setProperty("--d",d.toFixed(2)+"cqw");
-    p.lab.textContent=fmt.format(r.hy)+" h";
+    el.style.order=i;
+    el.querySelector("b").textContent=fmt.format(r.hy)+" h · "+fmt.format(r.eur)+" €";
+    el.querySelector("i").style.width=(r.hy/max*100).toFixed(1)+"%";
   });
-  place(performance.now());
+  Array.prototype.slice.call(box.children).forEach(function(n){if(!keep[n.id])n.remove()});
+  box.hidden=!c.rows.length;
 }
-function place(now){
-  var t=REDUCED?0:now/1000;
-  for(var id in planets){
-    var p=planets[id], ring=RINGS[p.ring], a=p.phase+t*ring.w, R=ring.r*size;
-    p.el.style.transform="translate(calc(-50% + "+(Math.cos(a)*R).toFixed(1)+"px),calc(-50% + "+(Math.sin(a)*R).toFixed(1)+"px))";
+
+/* ---------- démo du hero (chiffres des études de cas du site) ---------- */
+var SCEN=[
+ {tab:"Formation",agent:"Supports de formation",ask:"Crée le support de formation et son quiz à partir de ce programme.",file:"Support_formation.pptx",before:"1 jour",after:"2 h",cap:"pour créer un support de formation et son quiz. Constaté chez IIFA."},
+ {tab:"Rendez-vous",agent:"Préparation de rendez-vous",ask:"Prépare mon rendez-vous de demain avec ce client.",file:"Brief_rendez-vous.docx",before:"30 min",after:"5 min",cap:"pour préparer un rendez-vous. Constaté chez DesktoDesk."},
+ {tab:"Synthèse comptable",agent:"Synthèse comptable",ask:"Fais la synthèse à partir de ces données comptables brutes.",file:"Synthese_comptable.xlsx",before:"1 jour",after:"1 h",cap:"pour une synthèse comptable. Constaté chez FRALXR."},
+ {tab:"Veille juridique",agent:"Veille juridique",ask:"Quelles nouveautés juridiques cette semaine pour mes clients ?",file:"Veille_juridique.docx",before:"2 h",after:"15 min",cap:"de veille juridique par semaine. Constaté chez FRALXR."}
+];
+var scenTimers=[], scenAuto=!REDUCED;
+function later(fn,ms){scenTimers.push(setTimeout(fn,ms))}
+function each(list,fn){Array.prototype.forEach.call(list,fn)}
+function showScen(i,animate){
+  scenTimers.forEach(clearTimeout);scenTimers=[];
+  var s=SCEN[i], ask=$("dAsk"), sks=$("dAi").querySelectorAll(".sk"), file=$("dFile"), ba=$("ba");
+  SCEN.forEach(function(_,k){var b=$("sc-"+k);b.setAttribute("aria-selected",k===i?"true":"false");b.classList.remove("run")});
+  $("dAgent").textContent="@"+s.agent;$("dFileName").textContent=s.file;
+  $("baBefore").textContent=s.before;$("baAfter").textContent=s.after;$("baCap").textContent=s.cap;
+  if(!animate){
+    ask.textContent=s.ask;ask.classList.remove("caret");
+    each(sks,function(e){e.classList.add("in")});file.classList.add("in");ba.classList.add("done");
+  }else{
+    ask.textContent="";ask.classList.add("caret");
+    each(sks,function(e){e.classList.remove("in")});file.classList.remove("in");ba.classList.remove("done");
+    var n=0, per=Math.max(14,Math.round(1100/s.ask.length));
+    (function type(){
+      n++;ask.textContent=s.ask.slice(0,n);
+      if(n<s.ask.length){later(type,per);return}
+      ask.classList.remove("caret");
+      each(sks,function(e,k){later(function(){e.classList.add("in")},250+k*220)});
+      later(function(){file.classList.add("in")},250+sks.length*220+150);
+      later(function(){ba.classList.add("done")},250+sks.length*220+650);
+    })();
+  }
+  if(scenAuto){
+    var dur=animate?6600:3600, tab=$("sc-"+i);
+    tab.style.setProperty("--dur",dur+"ms");
+    requestAnimationFrame(function(){requestAnimationFrame(function(){if(scenAuto)tab.classList.add("run")})});
+    later(function(){showScen((i+1)%SCEN.length,true)},dur);
   }
 }
-function loop(now){
-  if(!running)return;
-  place(now);requestAnimationFrame(loop);
-}
-function setRunning(){
-  var want=visible&&!document.hidden&&!REDUCED;
-  if(want&&!running){running=true;requestAnimationFrame(loop)}
-  else if(!want)running=false;
-}
-if("ResizeObserver" in window){new ResizeObserver(function(){size=stage.clientWidth||size;place(performance.now())}).observe(stage)}
-if("IntersectionObserver" in window){new IntersectionObserver(function(en){visible=en[0].isIntersecting;setRunning()}).observe(stage)}
-document.addEventListener("visibilitychange",setRunning);
+SCEN.forEach(function(s,i){
+  var b=document.createElement("button");
+  b.type="button";b.className="sc";b.id="sc-"+i;b.setAttribute("role","tab");b.textContent=s.tab;
+  b.addEventListener("click",function(){scenAuto=false;showScen(i,!REDUCED)});
+  $("scen").appendChild(b);
+});
 
 /* ---------- affinage par tâche ---------- */
 function renderRefine(c){
@@ -1007,11 +1077,10 @@ function render(){
   $("hoursAllOut").textContent=state.base+" h";
   $("rateOut").textContent=state.rate+" €";
   fill($("hoursAll"));fill($("rate"));
-  $("core").classList.toggle("empty-core",!n);
-  $("stageNote").textContent=!n?"Cochez une tâche pour lancer le calcul."
+  $("resNote").textContent=!n?"Cochez une tâche pour lancer le calcul."
     :state.touched?"Ordre de grandeur, sur la base de vos déclarations."
     :"Exemple préchargé : 3 tâches, 20 h par mois chacune. Modifiez pour voir votre chiffre.";
-  syncPlanets(c);renderRefine(c);renderPlan(c);
+  renderBars(c);renderRefine(c);renderPlan(c);
   tweenTo(c.totalE,c.totalH);
 }
 $("hoursAll").addEventListener("input",function(e){state.base=+e.target.value;state.hours={};state.touched=true;render()});
@@ -1127,13 +1196,15 @@ function renderDiag(){
 /* ---------- amarre ---------- */
 var dock=$("dock");
 if("IntersectionObserver" in window){
-  var heroIn=true, endIn=false;
+  var reached=false, resIn=false, endIn=false;
   var upd=function(){
-    var on=!heroIn&&!endIn;
+    var on=reached&&!resIn&&!endIn;
     dock.classList.toggle("show",on);dock.setAttribute("aria-hidden",on?"false":"true");
     Array.prototype.forEach.call(dock.querySelectorAll("a"),function(a){a.tabIndex=on?0:-1});
   };
-  new IntersectionObserver(function(en){heroIn=en[0].isIntersecting;upd()},{threshold:.05}).observe($("accueil"));
+  /* visible dès que le simulateur est entamé, tant que le chiffre lui-même n'est pas à l'écran */
+  new IntersectionObserver(function(en){reached=en[0].isIntersecting||en[0].boundingClientRect.top<0;upd()},{rootMargin:"0px 0px -45% 0px"}).observe($("simulateur"));
+  new IntersectionObserver(function(en){resIn=en[0].isIntersecting;upd()}).observe($("resEur"));
   new IntersectionObserver(function(en){endIn=en[0].isIntersecting;upd()},{threshold:.3}).observe($("suite"));
 }
 
@@ -1153,7 +1224,7 @@ function stars(){
 }
 var rz;window.addEventListener("resize",function(){clearTimeout(rz);rz=setTimeout(stars,150)});
 
-render();renderPro(false);renderDiag();stars();setRunning();
+render();renderPro(false);renderDiag();stars();showScen(0,false);
 })();
 </script>
 
