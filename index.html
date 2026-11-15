@@ -852,12 +852,18 @@ var TASKS=[
   details:["3 posts LinkedIn par semaine calés sur votre calendrier éditorial","Articles de blog optimisés pour les mots-clés métier et votre audience","Newsletter personnalisée par segment de contacts avec CTA adaptée"]},
  {id:"dossiers",label:"Analyse de gros dossiers",short:"Dossiers",auto:.6,agent:"Agent Analyse de dossiers",
   what:"Il lit et compare des centaines de pages (contrats, dossiers, procédures) pour en extraire les risques, points clés et recommandations.",
-  details:["Extraction des clauses à risque dans un contrat de 200 pages","Tableau comparatif de plusieurs dossiers avec points de vigilance","Synthèse exécutive prête à partager au client ou au comité"]}
+  details:["Extraction des clauses à risque dans un contrat de 200 pages","Tableau comparatif de plusieurs dossiers avec points de vigilance","Synthèse exécutive prête à partager au client ou au comité"]},
+ {id:"facturation",label:"Facturation",short:"Facturation",auto:.7,agent:"Agent Facturation",
+  what:"Il prépare les factures à partir de vos données de vente, contrôle les éléments obligatoires et les met en forme selon votre modèle comptable.",
+  details:["Factures générées à partir des bons de commande ou des contrats validés","Contrôle des mentions légales, du numéro de TVA et des conditions de paiement","Envoi et relance automatique en cas de non-paiement à échéance"]},
+ {id:"prospection",label:"Prospection commerciale",short:"Prospection",auto:.6,agent:"Agent Prospection",
+  what:"Il prépare des séquences de prospection multicanal (email, LinkedIn) personnalisées par compte et par contact.",
+  details:["Séquence de 5 emails + 2 touches LinkedIn par prospect","Personnalisation par actualité du compte, du secteur et du contact","Suivi des ouvertures, clics et réponses directement dans le CRM"]}
 ];
 var BY={};TASKS.forEach(function(t){BY[t.id]=t});
 var MONTHS=11, REAL=.65;
 
-var state={sel:["cr","mails","reporting"],hours:{},base:20,rate:45,unlocked:false,touched:false};
+var state={sel:["devis","relances","dossiers"],hours:{},base:20,rate:45,unlocked:false,touched:false};
 
 function calc(){
   var rows=state.sel.map(function(id){
@@ -893,8 +899,10 @@ function paintTotals(){
 }
 
 /* ---------- puces ---------- */
+/* les tâches métier, connectées aux outils, passent avant les usages que tout assistant sait déjà faire */
+var ORDER=["devis","relances","dossiers","facturation","saisie","prospection","reporting","docs","slides","contenus","cr","mails"];
 var chips=$("chips");
-TASKS.forEach(function(t){
+ORDER.map(function(id){return BY[id]}).forEach(function(t){
   var b=document.createElement("button");
   b.type="button";b.className="chip";b.id="chip-"+t.id;b.textContent=t.label;
   b.addEventListener("click",function(){
