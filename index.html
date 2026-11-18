@@ -204,29 +204,12 @@ form.mail input:focus{outline:2px solid var(--solar);outline-offset:1px}
 .case .shift svg{align-self:center;color:var(--dim)}
 .case p{color:var(--muted);font-size:.95rem;margin-top:.7rem}
 
-/* espace IA */
-.tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:2rem}
-.tab{padding:.55rem 1rem;border-radius:999px;border:1px solid var(--line-strong);background:transparent;color:var(--muted);font-size:.92rem;cursor:pointer}
-.tab[aria-selected="true"]{background:var(--indigo);border-color:var(--indigo);color:#05051a;font-weight:600}
-.win{margin-top:1.4rem;border:1px solid var(--line-strong);border-radius:18px;background:var(--panel);overflow:hidden;box-shadow:0 40px 90px -50px rgba(116,119,255,.7)}
+/* fenêtre et messages de la démo */
 .win-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .8rem;padding:.7rem 1rem;border-bottom:1px solid var(--line);font:500 .76rem var(--mono);color:var(--dim)}
 .win-bar .dots{display:flex;gap:6px}
 .win-bar .dots i{width:10px;height:10px;border-radius:50%;background:var(--panel-2);border:1px solid var(--line-strong)}
 .win-bar .fr{margin-left:auto;color:var(--ok);display:flex;align-items:center;gap:.4rem}
 .win-bar .fr::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok)}
-.win-body{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr)}
-@media (max-width:820px){.win-body{grid-template-columns:minmax(0,1fr)}}
-.side{padding:1.1rem;border-right:1px solid var(--line);display:grid;gap:.4rem;align-content:start;min-width:0}
-@media (max-width:820px){.side{border-right:0;border-bottom:1px solid var(--line)}}
-.side h4{margin:0 0 .3rem;font:500 .7rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
-.ag{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.7rem;align-items:center;padding:.55rem .6rem;border-radius:10px;font-size:.9rem}
-.ag.on{background:var(--indigo-soft);outline:1px solid var(--line-strong)}
-.ag .at{font:500 .72rem var(--mono);color:var(--indigo);background:var(--indigo-soft);border-radius:7px;padding:.25rem .4rem}
-.ag small{display:block;color:var(--dim);font-size:.78rem}
-.conn{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem}
-.conn span{font:500 .72rem var(--mono);color:var(--muted);border:1px solid var(--line);border-radius:7px;padding:.25rem .5rem}
-.chat{padding:1.3rem;display:grid;gap:1rem;align-content:start;min-width:0}
-.hook{font:600 1.15rem/1.3 var(--display);letter-spacing:-.01em}
 .msg{max-width:46ch;padding:.8rem 1rem;border-radius:14px;font-size:.93rem}
 .msg.me{justify-self:end;background:var(--panel-2);border:1px solid var(--line-strong)}
 .msg.me b{color:var(--indigo);font-weight:500;font-family:var(--mono);font-size:.84rem}
@@ -235,54 +218,25 @@ form.mail input:focus{outline:2px solid var(--solar);outline-offset:1px}
 .file{display:flex;align-items:center;gap:.7rem;padding:.6rem .7rem;border:1px solid var(--line-strong);border-radius:10px;font:500 .82rem var(--mono);margin-top:.2rem;min-width:0}
 .file span{overflow-wrap:anywhere}
 .file i{flex:none;width:26px;height:32px;border-radius:5px;background:var(--indigo-soft);border:1px solid var(--indigo)}
-.chat .note{margin-top:.2rem}
-.typing{animation:fadein .45s both}
-@keyframes fadein{from{opacity:.25;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-/* diagnostic */
-.diag{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,4vw,64px);margin-top:2.6rem;align-items:start}
-@media (max-width:900px){.diag{grid-template-columns:minmax(0,1fr)}}
-.qs{display:grid;gap:0;margin:0;padding:0;border:0}
-.q{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.8rem 1.4rem;align-items:center;padding:1.05rem 0;border-top:1px solid var(--line)}
-.q:first-child{border-top:0;padding-top:0}
-@media (max-width:620px){.q{grid-template-columns:minmax(0,1fr)}}
-.q p{font-size:.98rem}
-.seg{display:inline-flex;border:1px solid var(--line-strong);border-radius:10px;overflow:hidden;width:fit-content}
-.seg label{position:relative;padding:.45rem .8rem;font-size:.86rem;color:var(--muted);cursor:pointer;border-left:1px solid var(--line-strong);white-space:nowrap}
-.seg label:first-of-type{border-left:0}
-.seg input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
-.seg label:has(input:checked){background:var(--risk-soft);color:var(--ink)}
-.seg label:has(input:focus-visible){outline:2px solid var(--solar);outline-offset:-2px}
-.readout{position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);border:1px solid var(--line-strong);border-radius:20px;padding:1.6rem;background:var(--panel)}
-.readout .score{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
-.readout .score b{font:700 3rem/1 var(--display);color:var(--risk);font-variant-numeric:tabular-nums}
-.readout .score span{color:var(--muted);font-size:.95rem}
-.axis{margin-top:1.3rem;padding-top:1.2rem;border-top:1px solid var(--line)}
-.axis .hd{display:flex;justify-content:space-between;gap:1rem;align-items:baseline}
-.axis .hd b{font:600 1rem var(--display)}
-.axis .hd span{font:500 .74rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
-.axis[data-l="1"] .hd span{color:var(--solar)}
-.axis[data-l="2"] .hd span{color:var(--risk)}
-.meter{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:.6rem}
-.meter i{height:6px;border-radius:3px;background:var(--panel-2);transition:background .25s}
-.meter i.on{background:var(--risk)}
-.axis p{font-size:.86rem;color:var(--muted);margin-top:.6rem}
+/* liens vers les pages métier */
+.metiers{border-top:1px solid var(--line)}
+.metiers .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem 1rem;padding-block:1.5rem}
+.metiers .lbl{font:500 .72rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-right:.4rem}
+.metiers a{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem .9rem;border:1px solid var(--line-strong);border-radius:999px;text-decoration:none;font-size:.92rem;color:var(--ink);transition:border-color .15s,background .15s}
+.metiers a:hover{border-color:var(--indigo);background:var(--indigo-soft)}
+.metiers a::after{content:"→";color:var(--indigo)}
 
-/* tarif */
-.price{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);margin-top:2.6rem;align-items:start}
-@media (max-width:900px){.price{grid-template-columns:minmax(0,1fr)}}
-.bigprice{display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem .8rem}
-.bigprice b{font:700 clamp(2.8rem,6vw,4.2rem)/1 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-.bigprice span{color:var(--muted)}
-.badges{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
-.badges span{font-size:.84rem;padding:.3rem .7rem;border-radius:999px;background:var(--indigo-soft);color:var(--ink);border:1px solid var(--line)}
-.incl{list-style:none;margin:1.4rem 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.5rem 1.2rem;font-size:.95rem}
-.incl li{display:flex;gap:.6rem}
-.incl li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--indigo);margin-top:.6em}
-.custom{border:1px solid var(--line-strong);border-radius:20px;padding:1.6rem;background:var(--panel);display:grid;gap:.9rem;align-content:start}
-.custom h3{font-size:1.4rem;font-weight:600}
-.custom p{color:var(--muted)}
-.custom .btn{justify-self:start}
+/* confidentialité : risques face aux garanties */
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.2rem;margin-top:2.4rem}
+@media (max-width:820px){.two{grid-template-columns:minmax(0,1fr)}}
+.col{border:1px solid var(--line);border-radius:20px;padding:1.6rem;display:grid;gap:1.2rem;align-content:start}
+.col.good{border-color:rgba(98,214,166,.35);background:rgba(98,214,166,.05)}
+.col h3{font-size:1.25rem;font-weight:600}
+.col dl{margin:0;display:grid;gap:1.1rem}
+.col dt{font:500 .72rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--risk)}
+.col.good dt{color:var(--ok)}
+.col dd{margin:.3rem 0 0;color:var(--muted);font-size:.95rem}
 
 /* listes à puces et chiffres partagés */
 .pts{list-style:none;margin:1.2rem 0 0;padding:0;display:grid;gap:.45rem;font-size:.95rem;color:var(--muted)}
@@ -333,16 +287,6 @@ form.mail input:focus{outline:2px solid var(--solar);outline-offset:1px}
 .route.fr .node.on rect{stroke:var(--ok);fill:rgba(98,214,166,.14)}
 .route.fr .pulse{fill:var(--ok);filter:drop-shadow(0 0 5px var(--ok))}
 .tile.fr .why{color:var(--ok)}
-.sov{margin-top:2.6rem;padding-top:2.2rem;border-top:1px solid var(--line)}
-.sov h3{font-size:clamp(1.4rem,2.6vw,2rem);font-weight:600;line-height:1.12;margin-top:.9rem}
-.sov h3 em{font-style:normal;color:var(--ok)}
-.sov>p{color:var(--muted);max-width:64ch;margin-top:.8rem}
-.guar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:1.6rem}
-@media (max-width:1000px){.guar{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:560px){.guar{grid-template-columns:minmax(0,1fr)}}
-.guar div{border:1px solid rgba(98,214,166,.3);background:rgba(98,214,166,.05);border-radius:16px;padding:1.1rem}
-.guar b{display:block;font:600 1rem var(--display)}
-.guar span{display:block;color:var(--muted);font-size:.9rem;margin-top:.4rem}
 
 /* études de cas : emplacement du logo et chiffres encadrés, comme sur le site actuel */
 .clogo{display:flex;flex-wrap:wrap;align-items:center;gap:.8rem 1rem}
@@ -433,14 +377,16 @@ blockquote{margin:0;font:500 clamp(1.1rem,1.8vw,1.4rem)/1.42 var(--display);lett
 .names{display:flex;flex-wrap:wrap;gap:.4rem .5rem;margin-top:.6rem}
 .names span{font:500 .8rem var(--mono);padding:.3rem .6rem;border:1px solid var(--line);border-radius:8px;color:var(--muted)}
 
-/* portes de sortie */
-.doors{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:1.2rem;margin-top:2.4rem}
-@media (max-width:900px){.doors{grid-template-columns:minmax(0,1fr)}}
-.door{border-radius:22px;padding:clamp(1.5rem,3vw,2.4rem);border:1px solid var(--line-strong);display:grid;gap:.9rem;align-content:start}
-.door.go{background:radial-gradient(circle at 85% 0,rgba(116,119,255,.35),transparent 55%),var(--panel)}
-.door h3{font-size:clamp(1.4rem,2.6vw,1.9rem);font-weight:600;line-height:1.12}
-.door p{color:var(--muted)}
-.door .btn{justify-self:start}
+/* dernier écran : le fondateur, le rendez-vous, puis le guide */
+.badges{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+.badges span{font-size:.84rem;padding:.3rem .7rem;border-radius:999px;background:var(--indigo-soft);border:1px solid var(--line)}
+.later{margin-top:3rem;padding-top:2.2rem;border-top:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.2rem clamp(24px,4vw,64px);align-items:center}
+@media (max-width:820px){.later{grid-template-columns:minmax(0,1fr)}}
+.later h3{font-size:clamp(1.3rem,2.4vw,1.7rem);font-weight:600;line-height:1.15;margin-top:.8rem}
+.later form.mail{margin-top:0}
+.planhead{margin-top:3.2rem;padding-top:2.4rem;border-top:1px solid var(--line)}
+.planhead h3{font-size:clamp(1.4rem,2.6vw,2rem);font-weight:600}
+.planhead p{color:var(--muted);margin-top:.6rem;max-width:60ch}
 
 /* amarre */
 .dock{position:fixed;left:0;right:0;bottom:0;z-index:35;background:rgba(11,11,30,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid rgba(255,181,71,.4);padding-bottom:env(safe-area-inset-bottom,0px);transform:translateY(110%);transition:transform .35s}
@@ -467,7 +413,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:.6rem 2rem;justify-content:space-be
       <a href="#surmesure">Sur mesure</a>
       <a href="#plateforme">Plateforme</a>
       <a href="#cas">Cas clients</a>
-      <a href="#tarif">Tarif</a>
+      <a href="#confidentialite">Confidentialité</a>
     </nav>
     <a class="btn btn-indigo btn-sm" href="https://cal.com/sina-movaghar-9rfpo3/30min" target="_blank" rel="noreferrer">Réserver une démo</a>
   </div>
@@ -559,14 +505,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:.6rem 2rem;justify-content:space-be
         <p class="note" id="resNote"></p>
       </aside>
     </div>
-  </div>
-</section>
-
-<section class="band" id="plan">
-  <div class="wrap">
-    <p class="eyebrow" style="--c:var(--solar)">Votre plan</p>
-    <h2 style="margin-top:1rem">Les agents à déployer en premier chez vous</h2>
-    <p class="lede">Classés par heures récupérables. Le premier est détaillé ici, le plan complet part par mail.</p>
+    <div class="planhead" id="plan">
+      <h3>Les agents à déployer en premier chez vous</h3>
+      <p>Classés par heures récupérables. Le premier est détaillé ici, le plan complet part par mail.</p>
+    </div>
     <div class="plan-grid">
       <div>
         <ol class="agents" id="agents"></ol>
@@ -688,30 +630,15 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:.6rem 2rem;justify-content:space-be
         <p>Teams, SharePoint, Gmail, CRM... Vos agents connaissent votre contexte métier dès le premier jour.</p>
       </article>
     </div>
-    <div class="sov">
-      <p class="eyebrow" style="--c:var(--ok)">Modèles open source souverains</p>
-      <h3>Les meilleurs modèles open source. <em>Exécutés en France.</em></h3>
-      <p>Qwen, DeepSeek, Kimi, Mistral&nbsp;: les modèles open source rivalisent désormais avec les meilleurs. Nous les hébergeons nous-mêmes pour que vos données sensibles restent en France.</p>
-      <div class="guar">
-        <div><b>Inférence en France</b><span>Les modèles tournent sur nos serveurs à Paris. Vos requêtes ne quittent jamais le territoire.</span></div>
-        <div><b>Aucun appel à l'éditeur</b><span>Le modèle est téléchargé et exécuté chez nous&nbsp;: ni Alibaba, ni DeepSeek, ni aucun tiers ne voit vos données.</span></div>
-        <div><b>RGPD et hors Cloud Act</b><span>Hébergeur français, DPA signé, aucune juridiction extra-européenne sur vos données.</span></div>
-        <div><b>Aucun entraînement</b><span>Vos documents ne servent jamais à entraîner un modèle. Journalisation et traçabilité incluses.</span></div>
-      </div>
-    </div>
   </div>
 </section>
 
-<section class="band" id="espace">
+<section class="metiers" aria-label="Pages par métier">
   <div class="wrap">
-    <p class="eyebrow">Votre espace IA</p>
-    <h2 style="margin-top:1rem">À quoi ressemble OrbitAI dans votre métier</h2>
-    <p class="lede">Choisissez votre profession. Les agents et les connecteurs changent, l'hébergement reste en France.</p>
-    <div class="tabs" role="tablist" aria-label="Professions" id="tabs"></div>
-    <div class="win" role="tabpanel" id="win" aria-live="polite"></div>
-    <div class="cta-row">
-      <a class="btn btn-indigo" href="https://cal.com/sina-movaghar-9rfpo3/30min" target="_blank" rel="noreferrer">Voir cet espace sur mes propres cas</a>
-    </div>
+    <span class="lbl">Votre métier, vos agents</span>
+    <a href="https://claude.ai/artifact/F7Y5MhYe7khVz4iV5qc1Z9#avocats" target="_blank" rel="noreferrer">Avocats et juristes</a>
+    <a href="https://claude.ai/artifact/F7Y5MhYe7khVz4iV5qc1Z9#comptables" target="_blank" rel="noreferrer">Experts-comptables</a>
+    <a href="https://claude.ai/artifact/F7Y5MhYe7khVz4iV5qc1Z9#cgp" target="_blank" rel="noreferrer">Gestion de patrimoine</a>
   </div>
 </section>
 
@@ -774,32 +701,38 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:.6rem 2rem;justify-content:space-be
   </div>
 </section>
 
-<section class="band" id="diagnostic">
+<section class="band" id="confidentialite">
   <div class="wrap">
-    <p class="eyebrow" style="--c:var(--risk)">Shadow AI</p>
+    <p class="eyebrow" style="--c:var(--risk)">Confidentialité</p>
     <h2 style="margin-top:1rem">Vos données confidentielles sont-elles déjà dans ChatGPT&nbsp;?</h2>
-    <p class="lede">Six questions, une minute. Votre exposition s'affiche à mesure que vous répondez.</p>
-    <div class="diag">
-      <fieldset class="qs" id="qs"><legend class="note" style="padding:0;margin-bottom:1rem">Auto-évaluation indicative. Ce n'est ni un audit ni un avis juridique.</legend></fieldset>
-      <aside class="readout" aria-live="polite">
-        <div class="score"><b id="dScore">0</b><span id="dScoreLbl">sur 12. Répondez pour voir votre exposition.</span></div>
-        <div id="axes"></div>
-        <form class="mail" id="guideForm" novalidate>
-          <label for="guideMail">Recevoir le guide&nbsp;: 6 critères, 1 arbre de décision, 12 questions à poser avant de signer</label>
-          <input id="guideMail" type="email" required autocomplete="email" placeholder="prenom@entreprise.fr">
-          <button class="btn btn-ghost" type="submit">Recevoir le guide gratuit</button>
-          <p class="note" id="guideErr">Copilot, ChatGPT, Mistral ou plateforme souveraine&nbsp;? 15 minutes de lecture.</p>
-        </form>
-        <div class="sent" id="guideSent" hidden><b>C'est noté.</b> Prototype&nbsp;: aucun mail n'est parti. En production, le guide est envoyé et téléchargeable aussitôt.</div>
-      </aside>
+    <p class="lede">Ce ne sont pas des hypothèses. Ce sont les trois angles morts que nous retrouvons dans presque chaque audit d'usage IA.</p>
+    <div class="two">
+      <div class="col">
+        <h3>Avec un outil grand public</h3>
+        <dl>
+          <div><dt>Souveraineté</dt><dd>ChatGPT, Copilot, Gemini&nbsp;: hébergement aux États-Unis. Le Cloud Act permet aux autorités américaines d'exiger l'accès aux données détenues par une société américaine, sans vous en informer.</dd></div>
+          <div><dt>Conformité</dt><dd>Secret professionnel, secret bancaire, données de santé, données salariales. Chaque métier a son régime. Aucun ne prévoit d'exception pour l'intelligence artificielle.</dd></div>
+          <div><dt>Traçabilité</dt><dd>Qui utilise quoi, avec quelles données, pour quel résultat. Sans espace commun, il n'y a ni traçabilité ni preuve de conformité si on vous le demande un jour.</dd></div>
+        </dl>
+      </div>
+      <div class="col good">
+        <h3>Avec OrbitAI en mode 100&nbsp;% souverain</h3>
+        <dl>
+          <div><dt>Inférence en France</dt><dd>Les modèles tournent sur nos serveurs à Paris. Vos requêtes ne quittent jamais le territoire.</dd></div>
+          <div><dt>Aucun appel à l'éditeur</dt><dd>Le modèle est téléchargé et exécuté chez nous&nbsp;: ni Alibaba, ni DeepSeek, ni aucun tiers ne voit vos données.</dd></div>
+          <div><dt>RGPD et hors Cloud Act</dt><dd>Hébergeur français, DPA signé, aucune juridiction extra-européenne sur vos données.</dd></div>
+          <div><dt>Aucun entraînement</dt><dd>Vos documents ne servent jamais à entraîner un modèle. Journalisation et traçabilité incluses.</dd></div>
+        </dl>
+      </div>
     </div>
+    <p class="note" style="margin-top:1.2rem;max-width:70ch">Qwen, DeepSeek, Kimi, Mistral&nbsp;: les modèles open source rivalisent désormais avec les meilleurs. Nous les hébergeons nous-mêmes pour que vos données sensibles restent en France.</p>
   </div>
 </section>
 
 <section class="band alt" id="fondateur">
   <div class="wrap">
-    <p class="eyebrow">Le fondateur</p>
-    <h2 style="margin-top:1rem">Une expertise reconnue</h2>
+    <p class="eyebrow">Votre interlocuteur</p>
+    <h2 style="margin-top:1rem">Parlez de votre projet avec le fondateur</h2>
     <p class="lede">OrbitAI est fondée par des experts français de l'IA générative.</p>
     <div class="fgrid">
       <div class="portrait" role="img" aria-label="Emplacement de la photo de Sina Movaghar"><b>SM</b><span>Photo du site à replacer ici</span></div>
@@ -820,65 +753,21 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:.6rem 2rem;justify-content:space-be
         <div class="names"><span>Thales</span><span>Banque Populaire</span><span>SNCF</span><span>Crédit Agricole</span></div>
         <p class="sub">Partenaires</p>
         <div class="names"><span>Wavestone</span><span>Mistral</span><span>Sideschool</span><span>La Poste</span></div>
-        <p class="sub">Hébergement et données</p>
-        <ul class="pts" style="margin-top:.6rem">
-          <li>Hébergé par Scaleway, cloud français basé à Paris</li>
-          <li>Vos données ne sont jamais utilisées pour entraîner des modèles</li>
-          <li>DPA disponible sur demande</li>
-        </ul>
         <div class="cta-row">
-          <a class="btn btn-indigo" href="https://cal.com/sina-movaghar-9rfpo3/30min" target="_blank" rel="noreferrer">Échanger 30 min avec Sina</a>
+          <a class="btn btn-indigo" href="https://cal.com/sina-movaghar-9rfpo3/30min" target="_blank" rel="noreferrer">Réserver 30 min avec Sina</a>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="band" id="tarif">
-  <div class="wrap">
-    <p class="eyebrow">Tarif</p>
-    <h2 style="margin-top:1rem">Un prix de départ clair, le reste sur mesure</h2>
-    <div class="price">
-      <div>
-        <div class="bigprice"><span>La plateforme, à partir de</span><b>49&nbsp;€&nbsp;HT</b><span>par mois et par utilisateur</span></div>
         <div class="badges"><span>Sans engagement</span><span>1 mois d'essai gratuit, sans carte bancaire</span></div>
-        <ul class="incl">
-          <li>Tous les modèles d'IA</li>
-          <li>Les agents métier</li>
-          <li>Les connecteurs à vos outils</li>
-          <li>L'hébergement en France</li>
-          <li>Le paramétrage et la formation</li>
-        </ul>
-        <div class="cta-row">
-          <a class="btn btn-indigo" href="https://cal.com/sina-movaghar-9rfpo3/30min" target="_blank" rel="noreferrer">Démarrer mon essai gratuit</a>
-        </div>
-        <p class="note" style="margin-top:.7rem">Activation en 30 minutes, en visio avec le fondateur. Exemple&nbsp;: une équipe de 5 personnes = 245&nbsp;€ HT par mois.</p>
-      </div>
-      <div class="custom">
-        <p class="sub" style="margin-top:0">Sur devis</p>
-        <h3>Un projet sur mesure&nbsp;?</h3>
-        <p>Connexion à vos logiciels métier, automatisation de vos process, accompagnement de vos équipes. Comme pour IIFA.</p>
-        <a class="btn btn-ghost" href="https://cal.com/sina-movaghar-9rfpo3/30min" target="_blank" rel="noreferrer">Réserver une démo personnalisée</a>
-        <p class="note">30 min en visio, sur vos propres cas d'usage, sans engagement.</p>
+        <p class="note" style="margin-top:.8rem">En visio, sur vos propres cas d'usage. On choisit ensemble le premier agent et on le teste sur un cas réel.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="band alt" id="suite">
-  <div class="wrap">
-    <h2>Deux façons de continuer</h2>
-    <div class="doors">
-      <div class="door go">
-        <p class="eyebrow">Vous avez un cas en tête</p>
-        <h3>30 minutes en visio, sur vos propres cas d'usage</h3>
-        <p>Sans engagement. On choisit ensemble le premier agent et on le teste sur un cas réel.</p>
-        <a class="btn btn-indigo" href="https://cal.com/sina-movaghar-9rfpo3/30min" target="_blank" rel="noreferrer">Réserver une démo personnalisée</a>
-      </div>
-      <div class="door">
+    <div class="later" id="suite">
+      <div>
         <p class="eyebrow" style="--c:var(--solar)">Pas encore prêt</p>
         <h3>Comparez les 4 options d'IA d'entreprise en 15 minutes</h3>
-        <form class="mail" id="endForm" novalidate style="margin-top:0">
+        <p class="note" style="margin-top:.6rem">Copilot, ChatGPT, Mistral ou plateforme souveraine&nbsp;? 6 critères, 1 arbre de décision, 12 questions à poser avant de signer.</p>
+      </div>
+      <div>
+        <form class="mail" id="endForm" novalidate>
           <label for="endMail">Votre adresse mail professionnelle</label>
           <input id="endMail" type="email" required autocomplete="email" placeholder="prenom@entreprise.fr">
           <button class="btn btn-ghost" type="submit">Recevoir le guide gratuit</button>
@@ -1220,97 +1109,7 @@ function wire(formId,inputId,errId,sentId,after){
   });
 }
 wire("planForm","planMail","planErr","planSent",function(){state.unlocked=true;renderPlan(calc())});
-wire("guideForm","guideMail","guideErr","guideSent");
 wire("endForm","endMail","endErr","endSent");
-
-/* ---------- espace IA par métier (données du site) ---------- */
-var CONN={gmail:"Gmail",outlook:"Outlook",gdrive:"Google Drive",sharepoint:"SharePoint",notion:"Notion",airtable:"Airtable",slack:"Slack",teams:"Teams",hubspot:"HubSpot",calendar:"Calendrier"};
-var PRO=[
- {id:"avocat",label:"Avocat / Juriste",hook:"Vos dossiers clients ne quittent jamais la France",conn:["outlook","gdrive","notion"],
-  agents:[["Analyse de dossier","2-3h par dossier"],["Recherche juridique confidentielle","30 min par recherche"],["Rédaction d'actes et conclusions","1-2h par document"],["Synthèse de jurisprudence","1-2h par synthèse"],["Assistant administratif cabinet","4-5h par semaine"]],
-  ask:"Analyse ce dossier et liste les points de vigilance.",file:"Note_de_synthese.docx"},
- {id:"compta",label:"Expert-comptable",hook:"Données fiscales et bilans clients en sécurité absolue",conn:["outlook","gdrive","airtable"],
-  agents:[["Analyse de bilan","2 à 5h / semaine"],["Lettre de mission","2 à 5h / semaine"],["Réponse client TVA & charges","2 à 5h / semaine"],["Veille Loi de Finances","2 à 5h / semaine"],["Synthèse de dossier fiscal","2 à 5h / semaine"]],
-  ask:"Analyse le bilan de ce client et prépare les points à lui présenter.",file:"Analyse_bilan.xlsx"},
- {id:"conseil",label:"Consultant",hook:"Vos données clients et méthodologies restent confidentielles",conn:["gmail","calendar","hubspot","notion","slack"],
-  agents:[["Préparation de rendez-vous","2 à 5h / semaine"],["Rédaction de propale","2 à 5h / semaine"],["Analyse de marché","2 à 5h / semaine"],["Compte-rendu de réunion","2 à 5h / semaine"],["Veille sectorielle","2 à 5h / semaine"]],
-  ask:"Prépare mon rendez-vous de demain avec ce prospect.",file:"Brief_rendez-vous.docx"},
- {id:"agence",label:"Agence marketing",hook:"Le ton de chaque client respecté, vos process protégés",conn:["gmail","notion","airtable","slack","hubspot"],
-  agents:[["Rédaction de contenu multi-format","2 à 5h / semaine"],["Calendrier éditorial","2 à 5h / semaine"],["Brief créatif","2 à 5h / semaine"],["Reporting client","2 à 5h / semaine"],["Veille concurrentielle","2 à 5h / semaine"]],
-  ask:"Rédige les posts de la semaine pour ce client, dans son ton.",file:"Calendrier_editorial.xlsx"},
- {id:"rh",label:"Responsable RH",hook:"Données salariales et évaluations sous votre contrôle exclusif",conn:["outlook","teams","sharepoint","gdrive"],
-  agents:[["Analyse de CV","2 à 5h / semaine"],["Rédaction d'offres d'emploi","2 à 5h / semaine"],["Synthèse d'entretien","2 à 5h / semaine"],["Réponse candidat","2 à 5h / semaine"],["Veille sociale","2 à 5h / semaine"]],
-  ask:"Classe ces candidatures par rapport à la fiche de poste.",file:"Grille_candidatures.xlsx"}
-];
-var curPro=0;
-var tabs=$("tabs");
-PRO.forEach(function(p,i){
-  var b=document.createElement("button");
-  b.type="button";b.className="tab";b.id="tab-"+p.id;b.setAttribute("role","tab");b.textContent=p.label;
-  b.addEventListener("click",function(){curPro=i;renderPro(true)});
-  tabs.appendChild(b);
-});
-function renderPro(anim){
-  var p=PRO[curPro];
-  PRO.forEach(function(x,i){$("tab-"+x.id).setAttribute("aria-selected",i===curPro?"true":"false")});
-  var win=$("win");win.setAttribute("aria-labelledby","tab-"+p.id);
-  win.innerHTML=
-   '<div class="win-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>orbitai.fr · espace '+esc(p.label)+'</span><span class="fr">Hébergé en France</span></div>'+
-   '<div class="win-body"><div class="side"><h4>5 agents préconfigurés</h4>'+
-   p.agents.map(function(a,i){return '<div class="ag'+(i===0?" on":"")+'"><span class="at">@'+(i+1)+'</span><span>'+esc(a[0])+'<small>'+esc(a[1])+'</small></span></div>'}).join("")+
-   '<h4 style="margin-top:1rem">Connecteurs prioritaires</h4><div class="conn">'+p.conn.map(function(c){return "<span>"+CONN[c]+"</span>"}).join("")+'</div></div>'+
-   '<div class="chat'+(anim?" typing":"")+'"><p class="hook">'+esc(p.hook)+'</p>'+
-   '<div class="msg me"><b>@'+esc(p.agents[0][0])+'</b><br>'+esc(p.ask)+'</div>'+
-   '<div class="msg ai"><div class="sk" style="width:92%"></div><div class="sk" style="width:78%"></div><div class="sk" style="width:85%"></div><div class="sk" style="width:54%"></div>'+
-   '<div class="file"><i aria-hidden="true"></i><span>'+esc(p.file)+'<br><span style="color:var(--dim)">Fichier prêt à l\'emploi, généré dans le chat</span></span></div></div>'+
-   '<p class="note">Exemple d\'échange. Le routeur choisit le modèle adapté à chaque demande.</p></div></div>';
-}
-
-/* ---------- diagnostic Shadow AI ---------- */
-var AXES=[
- {id:"souv",name:"Souveraineté",txt:"ChatGPT, Copilot, Gemini : hébergement aux États-Unis. Le Cloud Act permet aux autorités américaines d'exiger l'accès aux données détenues par une société américaine, sans vous en informer."},
- {id:"conf",name:"Conformité",txt:"Secret professionnel, secret bancaire, données de santé, données salariales. Chaque métier a son régime. Aucun ne prévoit d'exception pour l'intelligence artificielle."},
- {id:"trac",name:"Traçabilité",txt:"Qui utilise quoi, avec quelles données, pour quel résultat. Sans espace commun, il n'y a ni traçabilité ni preuve de conformité si on vous le demande un jour."}
-];
-var QS=[
- {id:"q1",axis:"souv",risky:"oui",t:"Vos équipes utilisent-elles ChatGPT, Copilot ou Gemini pour leur travail ?"},
- {id:"q2",axis:"souv",risky:"oui",t:"Des données clients, RH ou financières y sont-elles parfois copiées ?"},
- {id:"q3",axis:"conf",risky:"oui",t:"Votre activité relève-t-elle d'un secret ou d'un régime particulier (secret professionnel, bancaire, données de santé, données salariales) ?"},
- {id:"q4",axis:"conf",risky:"non",t:"Avez-vous des règles écrites sur l'usage de l'IA dans l'entreprise ?"},
- {id:"q5",axis:"trac",risky:"non",t:"Savez-vous qui utilise quel outil d'IA chez vous ?"},
- {id:"q6",axis:"trac",risky:"non",t:"Pourriez-vous prouver quelles données ont été envoyées à une IA, si on vous le demandait ?"}
-];
-var ans={};
-var qs=$("qs");
-QS.forEach(function(q){
-  var d=document.createElement("div");d.className="q";
-  d.innerHTML='<p id="'+q.id+'-t">'+esc(q.t)+'</p><div class="seg" role="radiogroup" aria-labelledby="'+q.id+'-t">'+
-   [["oui","Oui"],["non","Non"],["nsp","Je ne sais pas"]].map(function(o){
-     return '<label><input type="radio" name="'+q.id+'" id="'+q.id+'-'+o[0]+'" value="'+o[0]+'">'+o[1]+'</label>'}).join("")+'</div>';
-  d.addEventListener("change",function(e){ans[q.id]=e.target.value;renderDiag()});
-  qs.appendChild(d);
-});
-$("axes").innerHTML=AXES.map(function(a){
-  return '<div class="axis" id="ax-'+a.id+'" data-l="0"><div class="hd"><b>'+a.name+'</b><span></span></div><div class="meter" aria-hidden="true"><i></i><i></i><i></i><i></i></div><p>'+esc(a.txt)+'</p></div>'}).join("");
-function renderDiag(){
-  var total=0, answered=0, sc={souv:0,conf:0,trac:0};
-  QS.forEach(function(q){
-    var a=ans[q.id];if(!a)return;answered++;
-    var v=a==="nsp"?1:(a===q.risky?2:0);sc[q.axis]+=v;total+=v;
-  });
-  AXES.forEach(function(a){
-    var el=$("ax-"+a.id), v=sc[a.id], l=v>=3?2:(v>=1?1:0);
-    el.dataset.l=l;
-    el.querySelector(".hd span").textContent=!answered?"En attente":["Exposition faible","À surveiller","Exposition élevée"][l];
-    Array.prototype.forEach.call(el.querySelectorAll(".meter i"),function(i,k){i.classList.toggle("on",k<v)});
-  });
-  $("dScore").textContent=total;
-  $("dScoreLbl").textContent=!answered?"sur 12. Répondez pour voir votre exposition."
-    :answered<QS.length?"sur 12, "+answered+" réponses sur 6."
-    :total>=8?"sur 12. Exposition élevée : le sujet mérite 30 minutes."
-    :total>=4?"sur 12. Des angles morts à traiter."
-    :"sur 12. Exposition faible sur ces six points.";
-}
 
 /* ---------- amarre ---------- */
 var dock=$("dock");
@@ -1343,7 +1142,7 @@ function stars(){
 }
 var rz;window.addEventListener("resize",function(){clearTimeout(rz);rz=setTimeout(stars,150)});
 
-render();renderPro(false);renderDiag();stars();showScen(0,false);
+render();stars();showScen(0,false);
 })();
 </script>
 
