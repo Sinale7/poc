@@ -133,6 +133,51 @@ button{font:inherit;color:inherit}
 .shift svg{align-self:center;color:var(--dim)}
 .case p.txt{color:var(--muted);font-size:.95rem;margin-top:.6rem}
 
+/* cas d'usage : ce qui entre, ce qui sort, pourquoi un assistant générique ne suffit pas */
+.ucs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:2.4rem;border-top:1px solid var(--line)}
+.uc{padding:1.6rem 1.6rem 1.6rem 0;display:grid;gap:1rem;align-content:start;min-width:0}
+.uc+.uc{padding-left:1.6rem;border-left:1px solid var(--line)}
+@media (max-width:900px){.ucs{grid-template-columns:minmax(0,1fr)}.uc{padding:1.6rem 0;border-bottom:1px solid var(--line)}.uc+.uc{padding-left:0;border-left:0}}
+.uc h3{font-size:1.3rem;font-weight:600;line-height:1.15}
+.uc-desc{color:var(--muted);font-size:.95rem}
+.flow{display:grid;gap:.5rem;padding:.9rem;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
+.flow .in,.flow .outs span{font:500 .78rem var(--mono);padding:.3rem .6rem;border-radius:8px;border:1px solid var(--line-strong);width:fit-content}
+.flow .in{color:var(--muted)}
+.flow .outs{display:flex;flex-wrap:wrap;gap:.35rem}
+.flow .outs span{border-color:rgba(255,181,71,.45);background:var(--solar-soft)}
+.flow svg{color:var(--dim);transform:rotate(90deg);margin-left:.6rem}
+.uc dl{margin:0;display:grid;gap:.9rem}
+.uc dt{font:500 .7rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.uc dt.gain{color:var(--solar)}
+.uc dd{margin:.3rem 0 0;font-size:.93rem;color:var(--muted)}
+
+/* étude de cas détaillée : un onglet par lot, un bloc par agent */
+.study{background:radial-gradient(ellipse at 85% 0,rgba(255,181,71,.1),transparent 50%),var(--void)}
+.lots{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:2rem}
+.lot{display:grid;gap:.2rem;text-align:left;padding:.7rem 1rem;border-radius:12px;border:1px solid var(--line-strong);background:transparent;cursor:pointer;color:var(--muted);min-width:170px}
+.lot b{font:600 1rem var(--display);color:var(--ink)}
+.lot small{font:500 .7rem var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.lot[aria-selected="true"]{background:var(--solar-soft);border-color:rgba(255,181,71,.6)}
+.lot[aria-selected="true"] small{color:var(--solar)}
+.ag-card{margin-top:1.2rem;border:1px solid var(--line);border-radius:20px;background:var(--panel);padding:1.5rem;display:grid;gap:1.2rem}
+.ag-card header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:.6rem 1.5rem}
+.ag-card h3{font-size:1.35rem;font-weight:600}
+.gainbig{display:flex;flex-wrap:wrap;align-items:baseline;gap:.2rem .6rem;font-family:var(--display);font-weight:600}
+.gainbig s{color:var(--dim);font-size:1.05rem}
+.gainbig b{color:var(--solar);font-size:clamp(1.5rem,2.6vw,2rem);font-weight:700;letter-spacing:-.02em}
+.gainbig small{font:400 .86rem var(--body);color:var(--muted)}
+.gainbig svg{color:var(--dim);align-self:center}
+.tri{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.4rem}
+@media (max-width:900px){.tri{grid-template-columns:minmax(0,1fr)}}
+.tri h4{font:500 .7rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:.45rem}
+.tri h4.gain{color:var(--solar)}
+.tri p,.tri li{font-size:.93rem;color:var(--muted)}
+.tri ul{margin:0;padding-left:1.1rem;display:grid;gap:.3rem}
+.testi{margin:2.2rem 0 0;border-left:3px solid var(--indigo);padding-left:1.4rem;max-width:72ch}
+.testi blockquote{margin:0;font:500 clamp(1.05rem,1.7vw,1.3rem)/1.45 var(--display);letter-spacing:-.01em}
+.testi cite{display:block;margin-top:1rem;font-style:normal;color:var(--muted);font-size:.95rem}
+.testi cite b{color:var(--ink)}
+
 /* confidentialité */
 .two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.2rem;margin-top:2.2rem}
 @media (max-width:820px){.two{grid-template-columns:minmax(0,1fr)}}
@@ -184,9 +229,6 @@ form.mail input::placeholder{color:var(--dim)}
 /* prix et sortie */
 .end{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:center}
 @media (max-width:820px){.end{grid-template-columns:minmax(0,1fr)}}
-.bigprice{display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem .8rem;margin-top:1.2rem}
-.bigprice b{font:700 clamp(2.6rem,5.6vw,3.8rem)/1 var(--display);letter-spacing:-.03em}
-.bigprice span{color:var(--muted)}
 .badges{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
 .badges span{font-size:.84rem;padding:.3rem .7rem;border-radius:999px;background:var(--indigo-soft);border:1px solid var(--line)}
 .door{border-radius:22px;padding:clamp(1.5rem,3vw,2.2rem);border:1px solid var(--line-strong);background:radial-gradient(circle at 85% 0,rgba(116,119,255,.35),transparent 55%),var(--panel);display:grid;gap:.9rem}
@@ -205,6 +247,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:.6rem 2rem;justify-content:space-be
       <a href="#avocats" id="sw-avocats">Avocats</a>
       <a href="#comptables" id="sw-comptables">Comptables</a>
       <a href="#cgp" id="sw-cgp">Patrimoine</a>
+      <a href="#formation" id="sw-formation">Formation</a>
     </nav>
     <a class="btn btn-indigo btn-sm" href="https://cal.com/sina-movaghar-9rfpo3/30min" target="_blank" rel="noreferrer">Réserver une démo</a>
   </div>
@@ -252,12 +295,32 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:.6rem 2rem;justify-content:space-be
   </div>
 </section>
 
+<section class="band" id="ucSec" hidden>
+  <div class="wrap">
+    <p class="eyebrow">Cas d'usage</p>
+    <h2>Trois agents qu'un assistant générique ne sait pas faire</h2>
+    <p class="lede">Ils enchaînent plusieurs étapes, lisent vos documents et vos outils, et livrent des dossiers complets.</p>
+    <div class="ucs" id="ucs"></div>
+  </div>
+</section>
+
 <section class="band alt">
   <div class="wrap">
     <p class="eyebrow" style="--c:var(--solar)">Résultats</p>
     <h2 id="caseTitle"></h2>
     <div class="cases" id="cases"></div>
     <p class="note" style="margin-top:1rem">Estimations issues des usages constatés.</p>
+  </div>
+</section>
+
+<section class="band study" id="studySec" hidden>
+  <div class="wrap">
+    <p class="eyebrow" style="--c:var(--solar)">Étude de cas détaillée</p>
+    <h2 id="studyTitle"></h2>
+    <p class="lede" id="studyLede"></p>
+    <div class="lots" role="tablist" aria-label="Lots du projet" id="lots"></div>
+    <div id="lotBody" role="tabpanel"></div>
+    <figure class="testi" id="studyQuote"></figure>
   </div>
 </section>
 
@@ -330,14 +393,13 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:.6rem 2rem;justify-content:space-be
 <section class="band">
   <div class="wrap end">
     <div>
-      <p class="eyebrow">Tarif</p>
-      <div class="bigprice"><b>49&nbsp;€&nbsp;HT</b><span>par mois et par utilisateur</span></div>
+      <p class="eyebrow">Démo</p>
+      <h2 id="endTitle"></h2>
       <div class="badges"><span>Sans engagement</span><span>1 mois d'essai gratuit, sans carte bancaire</span></div>
-      <p class="note" style="margin-top:1rem;max-width:52ch">Inclus&nbsp;: tous les modèles d'IA, les agents métier, les connecteurs à vos outils, l'hébergement en France, le paramétrage et la formation.</p>
     </div>
     <div class="door">
-      <h3 id="endTitle"></h3>
-      <p>30 min en visio, sur vos propres cas d'usage, sans engagement. On choisit ensemble le premier agent et on le teste sur un cas réel.</p>
+      <h3>30 min en visio, sur vos propres cas d'usage</h3>
+      <p>On choisit ensemble le premier agent et on le teste sur un cas réel.</p>
       <a class="btn btn-indigo" href="https://cal.com/sina-movaghar-9rfpo3/30min" target="_blank" rel="noreferrer">Réserver une démo personnalisée</a>
     </div>
   </div>
@@ -367,7 +429,9 @@ var CASES={
   iifa:{who:"IIFA · formation média",before:"1 jour",after:"2 h",txt:"pour créer un support de formation et son quiz"},
   d2d:{who:"DesktoDesk · gestion de bureaux",before:"30 min",after:"5 min",txt:"pour préparer un rendez-vous"},
   fSyn:{who:"FRALXR · cabinet comptable",before:"1 jour",after:"1 h",txt:"pour une synthèse comptable"},
-  fVeille:{who:"FRALXR · cabinet comptable",before:"2 h",after:"15 min",txt:"de veille juridique par semaine"}
+  fVeille:{who:"FRALXR · cabinet comptable",before:"2 h",after:"15 min",txt:"de veille juridique par semaine"},
+  iCadrage:{who:"IIFA · organisme de formation média",before:"45-75 min",after:"5-10 min",txt:"par cadrage : compte rendu et devis"},
+  iProg:{who:"IIFA · organisme de formation média",before:"2-5 jours",after:"15-30 min",txt:"par programme complet, QCM inclus"}
 };
 
 /* Avocats et experts-comptables : agents, accroches et connecteurs du site.
@@ -465,6 +529,87 @@ var PRO={
   tasks:[["cr","Comptes rendus d'entretien"],["reporting","Reporting et analyse de données"],["slides","Création de PowerPoint chartés"],["devis","Propositions commerciales"],["prospection","Prospection commerciale"],["docs","Recherche de documents"],["mails","Tri et réponse aux mails"]],
   sel:["cr","reporting","slides"],
   endTitle:"Voyez OrbitAI travailler sur un de vos dossiers clients"
+ },
+ /* Organismes de formation : cas d'usage et détail du projet IIFA fournis par le fondateur.
+    Les gains sont des estimations ; les statuts des lots sont à confirmer avant publication. */
+ formation:{
+  eyebrow:"Pour les organismes de formation",
+  title:"L'IA de votre organisme de formation. <em>Propositions, programmes et preuves Qualiopi, sans y passer vos soirées.</em>",
+  lede:"Des agents qui lisent votre catalogue, votre grille de prix et votre logiciel de gestion, connectés à SharePoint, Outlook, Teams et Digiforma. Essayez-les ci-dessous.",
+  app:"orbitai.fr · espace de l'organisme",
+  conn:["SharePoint","Outlook","Teams","Digiforma"],
+  agents:[
+   {n:"Proposition complète",t:"",ask:"Voici la demande de ce client : prépare le programme, le devis et la convention.",
+    steps:["Lecture de votre catalogue et de vos anciennes propositions","Calcul du devis avec votre grille tarifaire","Rédaction du programme, de la convention et de l'analyse du besoin"],
+    doc:"Proposition de formation",secs:["Analyse du besoin","Programme sur mesure","Devis et convention"],file:"Proposition_formation.docx"},
+   {n:"Compte rendu de cadrage et devis",t:"45-75 min → 5-10 min",ask:"Voici mes notes de l'entretien : fais le compte rendu et le devis.",
+    steps:["Structuration des notes brutes","Calcul du devis : grille tarifaire, durée, participants","Dépôt des deux documents dans le dossier SharePoint du projet"],
+    doc:"Compte rendu de cadrage",secs:["Contexte et besoin du client","Objectifs et contraintes","Préconisations et prochaines étapes"],file:"CR_cadrage.docx et Devis.docx"},
+   {n:"Programme et QCM",t:"2-5 jours → 15-30 min",ask:"Formation de 3 jours pour 8 techniciens confirmés : génère le programme et les QCM.",
+    steps:["Lecture des programmes existants dans SharePoint","Rédaction du programme en 10 sections","Création des QCM avant et après formation"],
+    doc:"Programme de formation",secs:["Objectifs pédagogiques","Déroulé par journée","QCM avant et après formation"],file:"Programme_formation.docx"},
+   {n:"Contrôle Qualiopi",t:"",ask:"La session s'est terminée hier : vérifie que le dossier est complet.",
+    steps:["Lecture de la session dans votre logiciel de gestion","Vérification par stagiaire : convocation, émargement, évaluations, satisfaction","Liste des pièces manquantes"],
+    doc:"Contrôle de fin de session",secs:["Dossiers complets","Pièces manquantes par stagiaire","Relances à envoyer"],file:"Controle_session.xlsx"},
+   {n:"Appels d'offres",t:"",ask:"Lis ce dossier de consultation et rédige le mémoire technique.",
+    steps:["Lecture du dossier de consultation","Recherche dans vos réponses passées","Rédaction du mémoire technique"],
+    doc:"Mémoire technique",secs:["Compréhension du besoin","Méthode et moyens pédagogiques","Références et équipe"],file:"Memoire_technique.docx"}
+  ],
+  usecases:[
+   {t:"De la demande entreprise à la proposition complète",d:"Le besoin du client entre. Il en sort un dossier prêt à envoyer, avec l'analyse du besoin exigée par Qualiopi déjà rédigée.",
+    i:"Le besoin du client",o:["Programme sur mesure","Devis aux bons tarifs","Convention","Analyse du besoin"],
+    why:"Il faut votre catalogue, votre grille de prix, vos anciennes propositions et vos modèles de documents, et plusieurs étapes enchaînées.",
+    val:"Du chiffre d'affaires : répondre plus vite et mieux, donc signer plus. Dans les petites structures, c'est souvent le dirigeant qui rédige ces propositions le soir."},
+   {t:"Un contrôle Qualiopi continu",d:"À chaque fin de session, l'agent vérifie que tout est là pour chaque stagiaire et signale les manques.",
+    i:"Chaque fin de session",o:["Convocation","Émargement","Évaluations","Satisfaction","Manques signalés"],
+    why:"Il se déclenche seul et lit votre logiciel de gestion. Condition : que ce logiciel propose une API ou un export.",
+    val:"La sécurité de votre certification, donc de vos financements."},
+   {t:"Un copilote pour les appels d'offres de formation",d:"L'agent lit le dossier de consultation et rédige le mémoire technique à partir de vos réponses passées.",
+    i:"Le dossier de consultation",o:["Mémoire technique"],
+    why:"Il faut votre base de réponses, et savoir produire des documents longs et structurés.",
+    val:"Du chiffre d'affaires, sur des marchés importants."}
+  ],
+  caseTitle:"Mesuré dans un organisme de formation",cases:["iCadrage","iProg","iifa"],
+  study:{
+   title:"IIFA, organisme de formation média : tous les process repensés avec l'IA",
+   lede:"Un projet mené en trois lots. Agent par agent : ce qui se faisait à la main, ce que fait l'IA, et le gain.",
+   lots:[
+    {name:"Lot 1",status:"En service",gainLabel:"Gain estimé",agents:[
+     {n:"Agent compte rendu, cadrage et devis",before:"45-75 min",after:"5-10 min",unit:"par cadrage",
+      ctx:"Après chaque entretien client, en visio ou au téléphone, il fallait rédiger à la main un compte rendu structuré (30 à 45 min), puis un devis (15 à 30 min). Les notes étaient souvent en vrac, le compte rendu tardait et le devis se calculait à la main.",
+      ia:"L'utilisateur colle ses notes brutes ou une transcription audio. L'agent structure le compte rendu (contexte client, besoin, objectifs, contraintes, préconisations, prochaines étapes) et calcule le devis à partir de la grille tarifaire, de la durée et du nombre de participants. Les deux documents Word sont déposés automatiquement dans le bon dossier SharePoint du projet.",
+      gains:["45 à 75 min ramenées à 5 à 10 min par cadrage","Qualité et structure homogènes à chaque fois"]},
+     {n:"Agent programmes et contenus",before:"2-5 jours",after:"15-30 min",unit:"par programme complet",
+      ctx:"Créer un programme de formation complet, en 10 sections au format de l'organisme et conforme à Qualiopi, prenait 2 à 5 jours. Adapter un programme inter en intra pour un client prenait encore 1 à 2 jours. Les QCM avant et après formation étaient créés à la main pour chaque programme.",
+      ia:"L'utilisateur donne un brief : sujet, durée, client, niveau des participants. L'agent lit les programmes existants dans SharePoint, s'appuie sur sa connaissance du secteur broadcast et de ses normes (SMPTE, NMOS, PTP), puis génère le programme complet en 10 sections avec ses QCM avant et après formation. Il sait aussi adapter un programme inter en version intra. Tout est déposé en Word dans le dossier des supports.",
+      gains:["2 à 5 jours ramenés à 15 à 30 min par programme complet","QCM inclus","Gabarit aligné sur les exigences Qualiopi"]}
+    ]},
+    {name:"Lot 2",status:"Livraison à moyen terme",gainLabel:"Gain attendu",agents:[
+     {n:"Agent projet et opérations (SharePoint, Teams)",
+      ctx:"Les dossiers projets étaient éparpillés, pas toujours structurés de la même façon, et il n'existait pas de vue consolidée de l'état des projets. Reprendre un dossier trois semaines plus tard obligeait à fouiller pour retrouver le fil.",
+      ia:"Dès qu'un projet est créé dans Digiforma, l'arborescence du projet est créée automatiquement dans SharePoint et Teams, avec les conventions de nommage. Les dossiers sont renommés quand le statut change dans Digiforma. Les sessions sont synchronisées vers des sous-dossiers datés et vers le calendrier Outlook, avec un code couleur selon qu'elles sont à valider ou confirmées. L'IA tient à la racine de chaque projet un fichier qui en est la mémoire. Une analyse quotidienne repère les changements et un mail de reporting part chaque semaine.",
+      gains:["Plus de temps perdu à créer et ranger des dossiers","Reprise de contexte immédiate sur n'importe quel projet","Vision consolidée de tous les projets en cours"]},
+     {n:"Agent conversationnel projet (phase ultérieure)",
+      ctx:"Le dirigeant veut pouvoir poser des questions en français sur ses projets : quoi de neuf sur tel projet, quelles sont les prochaines sessions pour tel client. Aujourd'hui, il faut fouiller dans les dossiers et dans Digiforma.",
+      ia:"Une interface de conversation avec un sélecteur de projet. L'agent lit la mémoire du projet, les fichiers du dossier et les données Digiforma, puis répond. Il peut aussi produire des synthèses de documentation, déposées directement dans l'arborescence.",
+      gains:["L'état de n'importe quel projet en une question","Plus besoin de naviguer dans les dossiers ou dans Digiforma"]}
+    ]},
+    {name:"Lot 3",status:"Étape suivante",gainLabel:"Objectif",agents:[
+     {n:"Agent commercial et CRM",
+      ctx:"Le pipeline commercial n'était pas structuré. Prospects et clients étaient éparpillés entre Excel, Word, fichiers texte, Outlook et Digiforma. Pas de suivi systématique des relances après envoi d'un devis, pas de vision consolidée.",
+      ia:"Consolidation de tous les contacts dans une base unique : extraction depuis des fichiers variés, dédoublonnage, classification par type d'entreprise. Pipeline structuré avec notation des prospects, relances automatisées après devis, tableau de bord commercial et alertes sur les devis qui expirent ou les relances oubliées. Envoi vers le CRM de Digiforma.",
+      gains:["100 % des devis suivis","Réponse aux leads en moins de 2 h","Pipeline visible en temps réel","Base de contacts propre et exploitable"]}
+    ]}
+   ],
+   quote:"« Nous avons découvert Sina sur LinkedIn. Nous avions une vision et une feuille de route : il a su nous écouter, comprendre nos besoins spécifiques et mettre en œuvre ce que nous avions imaginé, en s'adaptant à nous à chaque étape. Trouver un expert capable de relier nos problématiques aux bonnes solutions IA, c'était presque un miracle. La solution répond parfaitement à notre vision. »",
+   who:"<b>Pascal Souclier</b>, fondateur, IIFA"
+  },
+  confTitle:"Programmes, clients, stagiaires : rien ne sort de France",
+  confLede:"Vos programmes sont votre savoir-faire, et vos dossiers contiennent des données de stagiaires. Voici ce qui change avec un espace hébergé en France.",
+  simTitle:"Combien d'heures l'IA peut-elle rendre à votre organisme ?",
+  tasks:[["devis","Propositions et devis"],["cr","Comptes rendus de cadrage"],["slides","Supports de formation"],["saisie","Suivi administratif des sessions"],["relances","Relances après devis"],["docs","Recherche de documents"],["reporting","Reporting et analyse de données"],["prospection","Prospection commerciale"]],
+  sel:["devis","cr","slides"],
+  endTitle:"Voyez OrbitAI travailler sur une de vos demandes clients"
  }
 };
 
@@ -545,12 +690,26 @@ $("rate").addEventListener("input",function(e){state.rate=+e.target.value;render
 /* ---------- une page par métier, choisie par l'ancre de l'adresse ---------- */
 function setPro(k){
   key=k;P=PRO[k];
-  ["avocats","comptables","cgp"].forEach(function(x){
+  Object.keys(PRO).forEach(function(x){
     if(x===k)$("sw-"+x).setAttribute("aria-current","page");else $("sw-"+x).removeAttribute("aria-current")});
   $("hEyebrow").textContent=P.eyebrow;$("hTitle").innerHTML=P.title;$("hLede").textContent=P.lede;
   $("appTitle").textContent=P.app;
   $("caseTitle").textContent=P.caseTitle;$("confTitle").textContent=P.confTitle;$("confLede").textContent=P.confLede;
   $("simTitle").textContent=P.simTitle;$("endTitle").textContent=P.endTitle;
+  $("ucSec").hidden=!P.usecases;
+  if(P.usecases)$("ucs").innerHTML=P.usecases.map(function(u){
+    return '<article class="uc"><h3>'+esc(u.t)+'</h3><p class="uc-desc">'+esc(u.d)+'</p>'+
+      '<div class="flow"><span class="in">'+esc(u.i)+'</span>'+ARROW+'<div class="outs">'+u.o.map(function(x){return '<span>'+esc(x)+'</span>'}).join("")+'</div></div>'+
+      '<dl><div><dt>Pourquoi un assistant générique ne suffit pas</dt><dd>'+esc(u.why)+'</dd></div><div><dt class="gain">Ce que ça vous rapporte</dt><dd>'+esc(u.val)+'</dd></div></dl></article>'}).join("");
+  $("studySec").hidden=!P.study;
+  if(P.study){
+    $("studyTitle").textContent=P.study.title;$("studyLede").textContent=P.study.lede;
+    $("lots").innerHTML=P.study.lots.map(function(l,i){
+      return '<button type="button" class="lot" role="tab" data-i="'+i+'"><b>'+esc(l.name)+'</b><small>'+esc(l.status)+'</small></button>'}).join("");
+    each($("lots").children,function(b){b.addEventListener("click",function(){renderLot(+b.dataset.i)})});
+    $("studyQuote").innerHTML='<blockquote>'+esc(P.study.quote)+'</blockquote><figcaption><cite>'+P.study.who+'</cite></figcaption>';
+    renderLot(0);
+  }
   $("side").innerHTML='<h4>Vos agents</h4>'+P.agents.map(function(a,i){
     return '<button type="button" class="agb" data-i="'+i+'"><span class="at">@'+(i+1)+'</span><span>'+esc(a.n)+(a.t?'<small>'+esc(a.t)+'</small>':'')+'</span></button>'}).join("")+
     '<h4 style="margin-top:1rem">Connecteurs</h4><div class="conn">'+P.conn.map(function(c){return '<span>'+esc(c)+'</span>'}).join("")+'</div>';
@@ -563,6 +722,15 @@ function setPro(k){
   state.sel=P.sel.slice();
   $("planForm").hidden=false;$("planSent").hidden=true;
   renderSim();runAgent(0,false);
+}
+function renderLot(i){
+  var L=P.study.lots[i];
+  each($("lots").children,function(b,k){b.setAttribute("aria-selected",k===i?"true":"false")});
+  $("lotBody").innerHTML=L.agents.map(function(a){
+    return '<article class="ag-card"><header><h3>'+esc(a.n)+'</h3>'+
+      (a.before?'<span class="gainbig"><s>'+esc(a.before)+'</s>'+ARROW+'<b>'+esc(a.after)+'</b><small>'+esc(a.unit)+'</small></span>':'')+'</header>'+
+      '<div class="tri"><div><h4>Avant</h4><p>'+esc(a.ctx)+'</p></div><div><h4>Ce que fait l\'agent</h4><p>'+esc(a.ia)+'</p></div>'+
+      '<div><h4 class="gain">'+esc(L.gainLabel)+'</h4><ul>'+a.gains.map(function(g){return '<li>'+esc(g)+'</li>'}).join("")+'</ul></div></div></article>'}).join("");
 }
 function route(){
   var h=location.hash.slice(1);
