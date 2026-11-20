@@ -297,7 +297,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:.6rem 2rem;justify-content:space-be
 
 <section class="band" id="ucSec" hidden>
   <div class="wrap">
-    <p class="eyebrow">Cas d'usage</p>
+    <p class="eyebrow">Déjà construits</p>
     <h2>Trois agents qu'un assistant générique ne sait pas faire</h2>
     <p class="lede">Ils enchaînent plusieurs étapes, lisent vos documents et vos outils, et livrent des dossiers complets.</p>
     <div class="ucs" id="ucs"></div>
@@ -426,12 +426,12 @@ var ARROW='<svg width="22" height="14" viewBox="0 0 22 14" fill="none" aria-hidd
 /* Parts automatisables : celles du simulateur actuel d'orbitai.fr */
 var AUTO={cr:.8,mails:.5,reporting:.75,devis:.6,relances:.7,saisie:.8,docs:.65,slides:.7,dossiers:.6,facturation:.7,prospection:.6};
 var CASES={
-  iifa:{who:"IIFA · formation média",before:"1 jour",after:"2 h",txt:"pour créer un support de formation et son quiz"},
+  iifa:{who:"IIFA · formation média",before:"2-5 jours",after:"15-30 min",txt:"pour un programme de formation complet, QCM inclus"},
   d2d:{who:"DesktoDesk · gestion de bureaux",before:"30 min",after:"5 min",txt:"pour préparer un rendez-vous"},
   fSyn:{who:"FRALXR · cabinet comptable",before:"1 jour",after:"1 h",txt:"pour une synthèse comptable"},
   fVeille:{who:"FRALXR · cabinet comptable",before:"2 h",after:"15 min",txt:"de veille juridique par semaine"},
   iCadrage:{who:"IIFA · organisme de formation média",before:"45-75 min",after:"5-10 min",txt:"par cadrage : compte rendu et devis"},
-  iProg:{who:"IIFA · organisme de formation média",before:"2-5 jours",after:"15-30 min",txt:"par programme complet, QCM inclus"}
+  i4h:{who:"IIFA · organisme de formation média",after:"4 h",txt:"gagnées par semaine et par collaborateur"}
 };
 
 /* Avocats et experts-comptables : agents, accroches et connecteurs du site.
@@ -531,7 +531,7 @@ var PRO={
   endTitle:"Voyez OrbitAI travailler sur un de vos dossiers clients"
  },
  /* Organismes de formation : cas d'usage et détail du projet IIFA fournis par le fondateur.
-    Les gains sont des estimations ; les statuts des lots sont à confirmer avant publication. */
+    Les trois lots sont livrés. Les gains sont des estimations. */
  formation:{
   eyebrow:"Pour les organismes de formation",
   title:"L'IA de votre organisme de formation. <em>Propositions, programmes et preuves Qualiopi, sans y passer vos soirées.</em>",
@@ -569,7 +569,7 @@ var PRO={
     why:"Il faut votre base de réponses, et savoir produire des documents longs et structurés.",
     val:"Du chiffre d'affaires, sur des marchés importants."}
   ],
-  caseTitle:"Mesuré dans un organisme de formation",cases:["iCadrage","iProg","iifa"],
+  caseTitle:"Mesuré dans un organisme de formation",cases:["iifa","iCadrage","i4h"],
   study:{
    title:"IIFA, organisme de formation média : tous les process repensés avec l'IA",
    lede:"Un projet mené en trois lots. Agent par agent : ce qui se faisait à la main, ce que fait l'IA, et le gain.",
@@ -584,17 +584,17 @@ var PRO={
       ia:"L'utilisateur donne un brief : sujet, durée, client, niveau des participants. L'agent lit les programmes existants dans SharePoint, s'appuie sur sa connaissance du secteur broadcast et de ses normes (SMPTE, NMOS, PTP), puis génère le programme complet en 10 sections avec ses QCM avant et après formation. Il sait aussi adapter un programme inter en version intra. Tout est déposé en Word dans le dossier des supports.",
       gains:["2 à 5 jours ramenés à 15 à 30 min par programme complet","QCM inclus","Gabarit aligné sur les exigences Qualiopi"]}
     ]},
-    {name:"Lot 2",status:"Livraison à moyen terme",gainLabel:"Gain attendu",agents:[
+    {name:"Lot 2",status:"En service",gainLabel:"Gain estimé",agents:[
      {n:"Agent projet et opérations (SharePoint, Teams)",
       ctx:"Les dossiers projets étaient éparpillés, pas toujours structurés de la même façon, et il n'existait pas de vue consolidée de l'état des projets. Reprendre un dossier trois semaines plus tard obligeait à fouiller pour retrouver le fil.",
       ia:"Dès qu'un projet est créé dans Digiforma, l'arborescence du projet est créée automatiquement dans SharePoint et Teams, avec les conventions de nommage. Les dossiers sont renommés quand le statut change dans Digiforma. Les sessions sont synchronisées vers des sous-dossiers datés et vers le calendrier Outlook, avec un code couleur selon qu'elles sont à valider ou confirmées. L'IA tient à la racine de chaque projet un fichier qui en est la mémoire. Une analyse quotidienne repère les changements et un mail de reporting part chaque semaine.",
       gains:["Plus de temps perdu à créer et ranger des dossiers","Reprise de contexte immédiate sur n'importe quel projet","Vision consolidée de tous les projets en cours"]},
-     {n:"Agent conversationnel projet (phase ultérieure)",
-      ctx:"Le dirigeant veut pouvoir poser des questions en français sur ses projets : quoi de neuf sur tel projet, quelles sont les prochaines sessions pour tel client. Aujourd'hui, il faut fouiller dans les dossiers et dans Digiforma.",
+     {n:"Agent conversationnel projet",
+      ctx:"Le dirigeant voulait pouvoir poser des questions en français sur ses projets : quoi de neuf sur tel projet, quelles sont les prochaines sessions pour tel client. Il fallait fouiller dans les dossiers et dans Digiforma.",
       ia:"Une interface de conversation avec un sélecteur de projet. L'agent lit la mémoire du projet, les fichiers du dossier et les données Digiforma, puis répond. Il peut aussi produire des synthèses de documentation, déposées directement dans l'arborescence.",
       gains:["L'état de n'importe quel projet en une question","Plus besoin de naviguer dans les dossiers ou dans Digiforma"]}
     ]},
-    {name:"Lot 3",status:"Étape suivante",gainLabel:"Objectif",agents:[
+    {name:"Lot 3",status:"En service",gainLabel:"Gain estimé",agents:[
      {n:"Agent commercial et CRM",
       ctx:"Le pipeline commercial n'était pas structuré. Prospects et clients étaient éparpillés entre Excel, Word, fichiers texte, Outlook et Digiforma. Pas de suivi systématique des relances après envoi d'un devis, pas de vision consolidée.",
       ia:"Consolidation de tous les contacts dans une base unique : extraction depuis des fichiers variés, dédoublonnage, classification par type d'entreprise. Pipeline structuré avec notation des prospects, relances automatisées après devis, tableau de bord commercial et alertes sur les devis qui expirent ou les relances oubliées. Envoi vers le CRM de Digiforma.",
@@ -715,7 +715,7 @@ function setPro(k){
     '<h4 style="margin-top:1rem">Connecteurs</h4><div class="conn">'+P.conn.map(function(c){return '<span>'+esc(c)+'</span>'}).join("")+'</div>';
   each($("side").querySelectorAll(".agb"),function(b){b.addEventListener("click",function(){runAgent(+b.dataset.i,!REDUCED)})});
   $("cases").innerHTML=P.cases.map(function(id){var c=CASES[id];
-    return '<article class="case"><p class="who">'+esc(c.who)+'</p><p class="shift"><s>'+esc(c.before)+'</s>'+ARROW+'<b>'+esc(c.after)+'</b></p><p class="txt">'+esc(c.txt)+'</p></article>'}).join("");
+    return '<article class="case"><p class="who">'+esc(c.who)+'</p><p class="shift">'+(c.before?'<s>'+esc(c.before)+'</s>'+ARROW:'')+'<b>'+esc(c.after)+'</b></p><p class="txt">'+esc(c.txt)+'</p></article>'}).join("");
   $("chips").innerHTML=P.tasks.map(function(t){return '<button type="button" class="chip" data-id="'+t[0]+'">'+esc(t[1])+'</button>'}).join("");
   each($("chips").children,function(c){c.addEventListener("click",function(){
     var i=state.sel.indexOf(c.dataset.id);if(i>=0)state.sel.splice(i,1);else state.sel.push(c.dataset.id);renderSim()})});
